@@ -6,10 +6,11 @@ import rs.raf.nutritiontracker.data.datasources.local.MealDataBase
 import rs.raf.nutritiontracker.data.datasources.remote.CategoryService
 import rs.raf.nutritiontracker.data.repositories.CategoryRepository
 import rs.raf.nutritiontracker.data.repositories.CategoryRepositoryImpl
+import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 
 val categoryModule = module {
 
-//    viewModel { MainViewModel(movieRepository = get()) }
+    viewModel { CategoryViewModel(categoryRepository = get()) }
 
     single<CategoryRepository> { CategoryRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
 

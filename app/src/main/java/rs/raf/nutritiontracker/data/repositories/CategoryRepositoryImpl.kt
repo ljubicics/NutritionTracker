@@ -21,7 +21,8 @@ class CategoryRepositoryImpl(
                 .getAllCategories()
                 .doOnNext {
                     Timber.e("Upis u bazu")
-                    val entities = it.map {
+                    println("AAAAAAAAA")
+                    val entities = it.categories.map {
                         CategoryEntity(
                             it.idCategory,
                             it.strCategory,

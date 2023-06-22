@@ -4,7 +4,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import rs.raf.nutritiontracker.data.models.CategoryResponse
 import rs.raf.nutritiontracker.data.models.FullMealForIdResponse
 import rs.raf.nutritiontracker.data.models.MealForCategoryResponse
 

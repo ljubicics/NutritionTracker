@@ -4,6 +4,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class AllCategoriesResponse(
-    val allCategories : List<CategoryResponse>
+    val allCategories : List<OneCategoryResponse>
 ) {
 }
