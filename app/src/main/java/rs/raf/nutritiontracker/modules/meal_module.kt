@@ -10,7 +10,7 @@ import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 
 val mealModule = module {
 
-    viewModel { MealViewModel(mealRepository = get()) }
+    viewModel { MealViewModel(mealRepository = get(), categoryRepository = get()) }
 
     single<MealRepository> { MealRepositoryImpl(localDataSource = get(), remoteDataSource = get()) }
 
