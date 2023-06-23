@@ -8,13 +8,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.ActivityMainBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
+import rs.raf.nutritiontracker.presentation.contract.MealContract
+import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val categoryViewModel: CategoryContract.ViewModel by viewModel<CategoryViewModel>()
+    private val mealViewModel: MealContract.ViewModel by viewModel<MealViewModel>()
+    private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by viewModel<MealsForCategoryViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         initUi()
         categoryViewModel.fetchAllCategories()
+//        mealViewModel.fetchAllMeals()
+        mealsForCategoryViewModel.fetchAllMealsForCategory()
     }
 
     private fun initUi() {

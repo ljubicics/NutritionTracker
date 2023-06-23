@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit
 
 class MealViewModel(
     private val mealRepository: MealRepository,
-    private val categoryRepository: CategoryRepository
 ) : ViewModel(), MealContract.ViewModel {
     private val subscriptions = CompositeDisposable()
     override val mealsState: MutableLiveData<MealsState> = MutableLiveData()
@@ -58,24 +57,12 @@ class MealViewModel(
 
     @SuppressLint("CheckResult")
     override fun fetchAllMeals() {
-        var categoryIds = mutableListOf<String>()
-        categoryRepository
-            .getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    for(category in it) {
-                        categoryIds.add(category.idCategory)
-                    }
-                },
-                {
-                    mealsState.value = MealsState.Error("Error happened while fetching data from db")
-                    Timber.e(it)
-                }
-            )
+//        var categoryStrs = mutableListOf<String>() // lista naziva kategorija
+        // TODO: Ovde zelim da pozovem samo metodu iz repository-ja to znaci da treba da pozovem metodu iz meals for category
+        // Pa onda da prolazim kroz to i da preko id-ja dobijem celo jelo
+        // Ali se to mora resavati u meal repository-ju
         val subscription = mealRepository
-            .fetchAll(categoryIds)
+            .fetchAll()
             .startWith(Resource.Loading()) //Kada se pokrene fetch hocemo da postavimo stanje na Loading
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

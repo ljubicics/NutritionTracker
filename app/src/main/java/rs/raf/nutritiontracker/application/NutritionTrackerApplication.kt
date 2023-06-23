@@ -10,6 +10,7 @@ import org.koin.core.logger.Level
 import rs.raf.nutritiontracker.modules.categoryModule
 import rs.raf.nutritiontracker.modules.coreModule
 import rs.raf.nutritiontracker.modules.mealModule
+import rs.raf.nutritiontracker.modules.mealsForCategoryModule
 import timber.log.Timber
 
 class NutritionTrackerApplication : Application() {
@@ -31,7 +32,8 @@ class NutritionTrackerApplication : Application() {
         val modules = listOf(
             coreModule,
             mealModule,
-            categoryModule
+            categoryModule,
+            mealsForCategoryModule
         )
         startKoin {
             androidLogger(Level.ERROR)
