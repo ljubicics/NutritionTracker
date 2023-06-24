@@ -9,11 +9,9 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.Resource
-import rs.raf.nutritiontracker.data.repositories.CategoryRepository
-import rs.raf.nutritiontracker.data.repositories.MealRepository
+import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.view.states.AddMealState
-import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.view.states.MealsState
 import timber.log.Timber
 import java.util.concurrent.TimeUnit

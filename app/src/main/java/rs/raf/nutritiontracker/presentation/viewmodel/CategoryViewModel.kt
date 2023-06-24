@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.Resource
-import rs.raf.nutritiontracker.data.repositories.CategoryRepository
+import rs.raf.nutritiontracker.data.repositories.specification.CategoryRepository
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.view.states.AddCategoryState
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState

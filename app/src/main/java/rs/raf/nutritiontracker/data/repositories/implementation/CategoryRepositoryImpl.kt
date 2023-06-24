@@ -1,14 +1,13 @@
-package rs.raf.nutritiontracker.data.repositories
+package rs.raf.nutritiontracker.data.repositories.implementation
 
 import io.reactivex.Completable
 import io.reactivex.Observable
 import rs.raf.nutritiontracker.data.datasources.local.CategoryDao
-import rs.raf.nutritiontracker.data.datasources.local.MealDao
 import rs.raf.nutritiontracker.data.datasources.remote.CategoryService
-import rs.raf.nutritiontracker.data.datasources.remote.MealService
 import rs.raf.nutritiontracker.data.models.Category
-import rs.raf.nutritiontracker.data.models.CategoryEntity
+import rs.raf.nutritiontracker.data.models.entities.CategoryEntity
 import rs.raf.nutritiontracker.data.models.Resource
+import rs.raf.nutritiontracker.data.repositories.specification.CategoryRepository
 import timber.log.Timber
 
 class CategoryRepositoryImpl(

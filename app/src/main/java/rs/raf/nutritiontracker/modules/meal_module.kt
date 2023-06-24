@@ -4,8 +4,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import rs.raf.nutritiontracker.data.datasources.local.MealDataBase
 import rs.raf.nutritiontracker.data.datasources.remote.MealService
-import rs.raf.nutritiontracker.data.repositories.MealRepository
-import rs.raf.nutritiontracker.data.repositories.MealRepositoryImpl
+import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
+import rs.raf.nutritiontracker.data.repositories.implementation.MealRepositoryImpl
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 
 val mealModule = module {

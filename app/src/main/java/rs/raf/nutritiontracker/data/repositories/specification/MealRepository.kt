@@ -1,4 +1,4 @@
-package rs.raf.nutritiontracker.data.repositories
+package rs.raf.nutritiontracker.data.repositories.specification
 
 import io.reactivex.Completable
 import io.reactivex.Observable

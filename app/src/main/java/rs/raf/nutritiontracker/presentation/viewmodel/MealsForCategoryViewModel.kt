@@ -7,10 +7,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import rs.raf.nutritiontracker.data.models.Resource
-import rs.raf.nutritiontracker.data.repositories.MealsForCategoryRepository
+import rs.raf.nutritiontracker.data.repositories.specification.MealsForCategoryRepository
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.view.states.AddMealsForCategoryState
-import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
 import timber.log.Timber
 

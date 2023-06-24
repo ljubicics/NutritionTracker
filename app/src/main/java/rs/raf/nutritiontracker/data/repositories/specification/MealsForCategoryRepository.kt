@@ -1,8 +1,6 @@
-package rs.raf.nutritiontracker.data.repositories
+package rs.raf.nutritiontracker.data.repositories.specification
 
 import io.reactivex.Observable
-import rs.raf.nutritiontracker.data.models.AllMealsForCategoryResponse
-import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.MealForCategory
 import rs.raf.nutritiontracker.data.models.Resource
 

@@ -3,10 +3,8 @@ package rs.raf.nutritiontracker.data.datasources.local
 import androidx.room.*
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
-import rs.raf.nutritiontracker.data.models.CategoryEntity
+import rs.raf.nutritiontracker.data.models.entities.CategoryEntity
 import rs.raf.nutritiontracker.data.models.CategoryWithMeals
-import rs.raf.nutritiontracker.data.models.MealEntity
 
 @Dao
 abstract class CategoryDao {

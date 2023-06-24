@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import io.reactivex.Completable
 import io.reactivex.Observable
-import rs.raf.nutritiontracker.data.models.MealForCategoryEntity
+import rs.raf.nutritiontracker.data.models.entities.MealForCategoryEntity
 
 @Dao
 abstract class MealsForCategoryDao {

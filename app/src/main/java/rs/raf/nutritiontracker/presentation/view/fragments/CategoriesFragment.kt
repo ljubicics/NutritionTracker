@@ -38,8 +38,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     }
 
     private fun init() {
-        initUi()
-        initObservers()
+//        initUi()
+//        initObservers()
     }
 
     private fun initUi() {
@@ -72,7 +72,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         // Pokrecemo operaciju dovlacenja podataka sa servera, kada podaci stignu,
         // bice sacuvani u bazi, tada ce se triggerovati observable na koji smo se pretplatili
         // preko metode getAllMovies()
-        categoryViewModel.fetchAllCategories()
+//        categoryViewModel.fetchAllCategories()
     }
 
     private fun renderState(state: CategoriesState) {

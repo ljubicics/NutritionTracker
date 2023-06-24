@@ -3,7 +3,7 @@ package rs.raf.nutritiontracker.data.datasources.remote
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
-import rs.raf.nutritiontracker.data.models.AllMealsForCategoryResponse
+import rs.raf.nutritiontracker.data.models.response.AllMealsForCategoryResponse
 import rs.raf.nutritiontracker.data.models.MealResponse
 
 interface MealService {

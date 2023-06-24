@@ -50,7 +50,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Splash screen
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha01'
 
     // UI
     implementation "com.google.android.material:material:1.7.0-alpha01"

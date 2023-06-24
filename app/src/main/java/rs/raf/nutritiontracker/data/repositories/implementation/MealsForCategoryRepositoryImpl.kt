@@ -1,27 +1,25 @@
-package rs.raf.nutritiontracker.data.repositories
+package rs.raf.nutritiontracker.data.repositories.implementation
 
 import android.annotation.SuppressLint
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import rs.raf.nutritiontracker.data.datasources.local.CategoryDao
 import rs.raf.nutritiontracker.data.datasources.local.MealsForCategoryDao
 import rs.raf.nutritiontracker.data.datasources.remote.MealService
-import rs.raf.nutritiontracker.data.models.AllMealsForCategoryResponse
+import rs.raf.nutritiontracker.data.models.response.AllMealsForCategoryResponse
 import rs.raf.nutritiontracker.data.models.Category
-import rs.raf.nutritiontracker.data.models.CategoryEntity
 import rs.raf.nutritiontracker.data.models.MealForCategory
-import rs.raf.nutritiontracker.data.models.MealForCategoryEntity
+import rs.raf.nutritiontracker.data.models.entities.MealForCategoryEntity
 import rs.raf.nutritiontracker.data.models.Resource
 import rs.raf.nutritiontracker.data.models.StrPlusAllMeals
-import timber.log.Timber
+import rs.raf.nutritiontracker.data.repositories.specification.CategoryRepository
+import rs.raf.nutritiontracker.data.repositories.specification.MealsForCategoryRepository
 
 class MealsForCategoryRepositoryImpl(
     private val localMealsForCategoryDataSource: MealsForCategoryDao,
     private val remoteDataSource: MealService,
     private val localCategoryDataSource: CategoryDao,
     private val categoryRepository: CategoryRepository,
-) : MealsForCategoryRepository{
+) : MealsForCategoryRepository {
 
     @SuppressLint("CheckResult")
     override fun fetchAll(): Observable<Resource<Unit>> {

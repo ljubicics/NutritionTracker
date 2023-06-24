@@ -1,9 +1,12 @@
-package rs.raf.nutritiontracker.data.models
+package rs.raf.nutritiontracker.data.models.entities
 
-import com.squareup.moshi.JsonClass
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@JsonClass(generateAdapter = true)
-data class OneMealResponse(
+@Entity(tableName = "meals")
+data class MealEntity(
+    @PrimaryKey(autoGenerate = true)
+    val mealId: Long,
     val idMeal: String,
     val strMeal: String,
     val strDrinkAlternate: String?,
@@ -57,5 +60,4 @@ data class OneMealResponse(
     val strImageSource: String?,
     val strCreativeCommonsConfirmed: String?,
     val dateModified: String?,
-) {
-}
+)
