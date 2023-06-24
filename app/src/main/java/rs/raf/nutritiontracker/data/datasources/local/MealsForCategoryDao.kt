@@ -20,6 +20,9 @@ abstract class MealsForCategoryDao {
     @Query("SELECT * FROM mealsForCategory")
     abstract fun getAll(): Observable<List<MealForCategoryEntity>>
 
+    @Query("SELECT * FROM mealsForCategory WHERE strCategory LIKE :category")
+    abstract fun getAllForCategory(category: String): Observable<List<MealForCategoryEntity>>
+
     @Query("DELETE FROM mealsForCategory")
     abstract fun deleteAll()
 

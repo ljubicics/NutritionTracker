@@ -8,6 +8,7 @@ class MealForCategoryEntity(
     @PrimaryKey
     val strMeal: String,
     val strMealThumb: String,
-    val idMeal: String
+    val idMeal: String,
+    val strCategory: String
 ) {
 }

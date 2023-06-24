@@ -13,6 +13,7 @@ import rs.raf.nutritiontracker.data.models.CategoryEntity
 import rs.raf.nutritiontracker.data.models.MealForCategory
 import rs.raf.nutritiontracker.data.models.MealForCategoryEntity
 import rs.raf.nutritiontracker.data.models.Resource
+import rs.raf.nutritiontracker.data.models.StrPlusAllMeals
 import timber.log.Timber
 
 class MealsForCategoryRepositoryImpl(
@@ -35,6 +36,7 @@ class MealsForCategoryRepositoryImpl(
 
         // Pravim listu AllMealsForCategory
         var listOfAllMealsForCategory : MutableList<AllMealsForCategoryResponse> = mutableListOf()
+        var listOfStrPlusAllMeals : MutableList<StrPlusAllMeals> = mutableListOf()
         strCategories.subscribe(
             {
                 for(str in it) {
@@ -43,6 +45,12 @@ class MealsForCategoryRepositoryImpl(
                         .subscribe(
                             {
                                 listOfAllMealsForCategory.add(it)
+                                val tmp = StrPlusAllMeals(
+                                    it,
+                                    str
+                                )
+                                listOfStrPlusAllMeals.add(tmp)
+                                println("VELICINA PLUS ALL MEALS " + listOfStrPlusAllMeals.size)
                             },
                             {
                                 println("ERRORRRRRRR")
@@ -54,21 +62,35 @@ class MealsForCategoryRepositoryImpl(
                 //     {jelo1, jelo2},
                 //     {jelo1, jelo2}
                 // }
-                val entities = listOfAllMealsForCategory.map {
-                    it.meals.map {
-                       MealForCategoryEntity(
-                           it.strMeal,
-                           it.strMealThumb,
-                           it.idMeal
-                       )
+//                val entities = listOfAllMealsForCategory.map {
+//                    it.meals.map {
+//                       MealForCategoryEntity(
+//                           it.strMeal,
+//                           it.strMealThumb,
+//                           it.idMeal,
+//
+//                       )
+//                    }
+//                }
+
+                var entitiesForDatabase: MutableList<MealForCategoryEntity> = mutableListOf()
+                for(item in listOfStrPlusAllMeals) {
+                    for(i in item.allMealsForCategoryResponse.meals) {
+                        val entity = MealForCategoryEntity (
+                                        i.strMeal,
+                                        i.strMealThumb,
+                                        i.idMeal,
+                                        item.strCategory
+                                    )
+                        entitiesForDatabase.add(entity)
                     }
                 }
 
                 // Prolazim kroz List<List<MealForCategoryEntity>> i dodajem unutrasnju listu u mutableList
-                val entitiesForDatabase: MutableList<MealForCategoryEntity> = mutableListOf()
-                for(item in entities) {
-                    entitiesForDatabase.addAll(item)
-                }
+//                val entitiesForDatabase: MutableList<MealForCategoryEntity> = mutableListOf()
+//                for(item in entities) {
+//                    entitiesForDatabase.addAll(item)
+//                }
                 println("VELICINAAA" + entitiesForDatabase.size)
                 localMealsForCategoryDataSource.deleteAndInsertAll(entitiesForDatabase)
             },
@@ -87,7 +109,23 @@ class MealsForCategoryRepositoryImpl(
                     MealForCategory(
                         it.strMeal,
                         it.strMealThumb,
-                        it.idMeal
+                        it.idMeal,
+                        it.strCategory
+                    )
+                }
+            }
+    }
+
+    override fun getAllByCategory(category: String): Observable<List<MealForCategory>> {
+        return localMealsForCategoryDataSource
+            .getAllForCategory(category)
+            .map {
+                it.map {
+                    MealForCategory(
+                        it.strMeal,
+                        it.strMealThumb,
+                        it.idMeal,
+                        it.strCategory
                     )
                 }
             }

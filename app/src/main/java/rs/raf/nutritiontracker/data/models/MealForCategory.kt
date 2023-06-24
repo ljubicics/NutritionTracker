@@ -7,6 +7,7 @@ package rs.raf.nutritiontracker.data.models
 data class MealForCategory(
     val strMeal: String,
     val strMealThumb: String,
-    val idMeal: String
+    val idMeal: String,
+    val strCategory: String
 ) {
 }

@@ -34,8 +34,9 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         initUi()
         categoryViewModel.fetchAllCategories()
-//        mealViewModel.fetchAllMeals()
         mealsForCategoryViewModel.fetchAllMealsForCategory()
+        mealViewModel.fetchAllMealsForCategory("Chicken")
+//        mealViewModel.fetchAllMeals("Chicken")
     }
 
     private fun initUi() {

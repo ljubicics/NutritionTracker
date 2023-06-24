@@ -7,8 +7,8 @@ import androidx.room.Relation
 data class CategoryWithMeals(
     @Embedded val category: CategoryEntity,
     @Relation(
-        parentColumn = "idCategory",
-        entityColumn = "idCategory"
+        parentColumn = "strCategory",
+        entityColumn = "strCategory"
     )
     val meals: List<MealEntity>
 ) {
