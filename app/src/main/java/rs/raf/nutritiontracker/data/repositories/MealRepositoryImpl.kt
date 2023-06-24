@@ -93,6 +93,7 @@ class MealRepositoryImpl(
                 val entities = mealResponseList.map {
                     it.meals.map {
                         MealEntity(
+                            mealId = 0,
                             it.idMeal,
                             it.strMeal,
                             it.strDrinkAlternate,
@@ -159,7 +160,11 @@ class MealRepositoryImpl(
                 println("ERRORRRRRR2")
             }
         )
-        return Observable.just(Resource.Success(Unit))
+        val listica: Observable<List<MealResponse>> = Observable.just(mealResponseList)
+        return listica.map {
+            Resource.Success(Unit)
+        }
+//        return Observable.just(Resource.Success(Unit))
     }
 
     override fun getAll(): Observable<List<Meal>> {

@@ -24,12 +24,15 @@ class CategoryViewModel(
 
     private val publishSubject: PublishSubject<String> = PublishSubject.create()
 
+
+    // Sluzi za dohvatanje podataka prilikom filtriranja
     init {
         // TODO: Namestiti da odmah povlaci iz kategorija sva jela
         val subscription = publishSubject
-            .debounce(200, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged()
+            .debounce(200, TimeUnit.MILLISECONDS)// pauza pre nego sto se izvrsi ono sto je planirano
+            .distinctUntilChanged()// Ovo se okine samo ukoliko je doslo do neke promene
             .switchMap {
+                // Kazemo sta zelimo da se desava prilikom switchovanja subscriptiona
                 categoryRepository
                     .getAllByName(it)
                     .subscribeOn(Schedulers.io())

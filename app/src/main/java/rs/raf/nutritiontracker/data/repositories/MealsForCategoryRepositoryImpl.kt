@@ -77,6 +77,7 @@ class MealsForCategoryRepositoryImpl(
                 for(item in listOfStrPlusAllMeals) {
                     for(i in item.allMealsForCategoryResponse.meals) {
                         val entity = MealForCategoryEntity (
+                                        mealForCatId = 0,
                                         i.strMeal,
                                         i.strMealThumb,
                                         i.idMeal,

@@ -24,6 +24,7 @@ class CategoryRepositoryImpl(
                     println("AAAAAAAAA")
                     val entities = it.categories.map {
                         CategoryEntity(
+                            categoryId = 0,
                             it.idCategory,
                             it.strCategory,
                             it.strCategoryThumb,

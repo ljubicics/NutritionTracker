@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
@@ -16,7 +15,7 @@ import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import timber.log.Timber
 
-class CategoriesListFragment : Fragment(R.layout.fragment_categories) {
+class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
 
     private var _binding: FragmentCategoriesBinding? = null
