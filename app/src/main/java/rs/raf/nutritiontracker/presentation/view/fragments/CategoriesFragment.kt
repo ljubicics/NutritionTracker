@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
+import rs.raf.nutritiontracker.presentation.view.recycler.adapter.CategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import timber.log.Timber
@@ -22,6 +25,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var adapter: CategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +42,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     }
 
     private fun init() {
-//        initUi()
-//        initObservers()
+        initUi()
+        initObservers()
     }
 
     private fun initUi() {
@@ -48,9 +52,14 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     }
 
     private fun initRecycler() {
-//        binding.listRv.layoutManager = LinearLayoutManager(context)
-//        adapter = MovieAdapter()
-//        binding.listRv.adapter = adapter
+        binding.recyclerViewCategories.layoutManager = LinearLayoutManager(context)
+        adapter = CategoryAdapter(onItemMoreClicked = {
+            CategoryDialogFragment(it.strCategoryDescription).show(
+                childFragmentManager,
+                CategoryDialogFragment.TAG
+            )
+        })
+        binding.recyclerViewCategories.adapter = adapter
     }
 
     private fun initListeners() {
@@ -79,7 +88,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         when (state) {
             is CategoriesState.Success -> {
                 showLoadingState(false)
-//                adapter.submitList(state.categories)
+                adapter.submitList(state.categories)
             }
             is CategoriesState.Error -> {
                 showLoadingState(false)
@@ -96,9 +105,10 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     }
 
     private fun showLoadingState(loading: Boolean) {
-//        binding.inputEt.isVisible = !loading
-//        binding.listRv.isVisible = !loading
-//        binding.loadingPb.isVisible = loading
+        binding.categoriesTV.isVisible = !loading
+        binding.filterCategoriesET.isVisible = !loading
+        binding.recyclerViewCategories.isVisible = !loading
+        binding.progressBar.isVisible = loading
     }
 
     override fun onDestroyView() {
