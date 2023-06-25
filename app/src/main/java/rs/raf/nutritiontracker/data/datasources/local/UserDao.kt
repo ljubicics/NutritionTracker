@@ -17,10 +17,10 @@ abstract class UserDao {
     @Insert( onConflict = OnConflictStrategy.REPLACE )
     abstract fun insertAll(entities: List<UserEntity>): Completable
 
-    @Query("SELECT * FROM meals")
+    @Query("SELECT * FROM users")
     abstract fun getAll(): Observable<List<UserEntity>>
 
-    @Query("DELETE FROM meals")
+    @Query("DELETE FROM users")
     abstract fun deleteAll()
 
     @Transaction

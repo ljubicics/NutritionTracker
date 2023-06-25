@@ -78,7 +78,20 @@ class CategoryViewModel(
     }
 
     override fun getAllCategories() {
-        TODO("Not yet implemented")
+        val subscription = categoryRepository
+            .getAll()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    categoriesState.value = CategoriesState.Success(it)
+                },
+                {
+                    categoriesState.value = CategoriesState.Error("Error happened while fetching data from db")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
     }
 
     override fun getCategoriesByName(name: String) {
@@ -87,5 +100,10 @@ class CategoryViewModel(
 
     override fun addCateogry(meal: Meal) {
         TODO("Not yet implemented")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        subscriptions.dispose()
     }
 }

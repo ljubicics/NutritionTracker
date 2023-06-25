@@ -48,4 +48,8 @@ class MealsForCategoryViewModel(
         TODO("Not yet implemented")
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        subscriptions.dispose()
+    }
 }

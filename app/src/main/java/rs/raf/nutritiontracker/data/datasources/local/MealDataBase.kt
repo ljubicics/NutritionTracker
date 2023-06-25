@@ -6,9 +6,11 @@ import androidx.room.TypeConverters
 import rs.raf.nutritiontracker.data.models.entities.CategoryEntity
 import rs.raf.nutritiontracker.data.models.entities.MealEntity
 import rs.raf.nutritiontracker.data.models.entities.MealForCategoryEntity
+import rs.raf.nutritiontracker.data.models.entities.UserEntity
 
 @Database(
-    entities = [MealEntity::class, CategoryEntity::class, MealForCategoryEntity::class],
+    entities = [MealEntity::class, CategoryEntity::class,
+        MealForCategoryEntity::class, UserEntity::class],
     version = 1,
     exportSchema = false)
 @TypeConverters()
@@ -16,4 +18,5 @@ abstract class MealDataBase : RoomDatabase() {
     abstract fun getMealDao(): MealDao
     abstract fun getCategoryDao(): CategoryDao
     abstract fun getMealsForCategoryDao(): MealsForCategoryDao
+    abstract fun getUserDao(): UserDao
 }
