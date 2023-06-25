@@ -158,6 +158,14 @@ class MealRepositoryImpl(
 //        return Observable.just(Resource.Success(Unit))
     }
 
+    override fun fetchMealByName(name: String): Observable<Resource<Unit>> {
+        return remoteDataSource
+            .fetchByMealName(name)
+            .map {
+                Resource.Success(Unit)
+            }
+    }
+
     override fun getAll(): Observable<List<Meal>> {
         TODO("Not yet implemented")
     }

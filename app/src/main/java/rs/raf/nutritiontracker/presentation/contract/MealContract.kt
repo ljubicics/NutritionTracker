@@ -12,6 +12,7 @@ interface MealContract {
 
         fun fetchAllMeals()
         fun fetchAllMealsForCategory(category: String)
+        fun fetchAllMealsByName(name: String)
         fun getAllMeals()
         fun getMealsByName(name: String)
         fun addMeal(meal: Meal)

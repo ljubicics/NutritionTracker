@@ -13,8 +13,9 @@ interface MealsForCategoryContract {
         val mealsForCategoryState: LiveData<MealsForCategoryState>
         val addMealsForCategoryDone: LiveData<AddMealsForCategoryState>
 
+        fun getAllMeals()
         fun fetchAllMealsForCategory()
-        fun getAllMealsForCategory()
-
+        fun getAllMealsForCategory(categoryName: String)
+        fun getAllMealsByName(mealName: String)
     }
 }

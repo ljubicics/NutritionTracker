@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,19 +14,28 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
+import rs.raf.nutritiontracker.presentation.contract.MealContract
+import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.CategoryAdapter
+import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
+import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
+import rs.raf.nutritiontracker.presentation.view.states.MealsState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
 import timber.log.Timber
 
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
+    private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsForCategoryViewModel>()
 
     private var _binding: FragmentCategoriesBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var adapter: CategoryAdapter
+    private lateinit var mealAdapter: MealForCategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +48,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.filterCategoriesET.setText("")
+        initRecycler()
         init()
     }
 
@@ -47,7 +59,6 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     }
 
     private fun initUi() {
-        initRecycler()
         initListeners()
     }
 
@@ -58,21 +69,40 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                 childFragmentManager,
                 CategoryDialogFragment.TAG
             )
+        }, listener = {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, MealsForCategoryFragment(it)).addToBackStack(null)
+            transaction.commit()
         })
+        mealAdapter = MealForCategoryAdapter()
         binding.recyclerViewCategories.adapter = adapter
     }
 
     private fun initListeners() {
-//        binding.inputEt.doAfterTextChanged {
-//            val filter = it.toString()
-//            mainViewModel.getMoviesByName(filter)
-//        }
+        binding.filterCategoriesET.doAfterTextChanged {
+            val filter = it.toString()
+            if(filter == "") {
+                categoryViewModel.getAllCategories()
+            } else {
+                val list: List<String> = listOf("Beef", "Chicken", "Dessert", "Lamb", "Miscellaneous", "Pasta",
+                    "Pork", "Seafood", "Side", "Starter", "Vegan", "Vegetarian", "Breakfast", "Goat")
+                if(list.contains(filter)) {
+                    categoryViewModel.getCategoriesByName(filter)
+                } else {
+                    mealsForCategoryViewModel.getAllMealsByName(filter)
+                }
+            }
+        }
     }
 
     private fun initObservers() {
         categoryViewModel.categoriesState.observe(viewLifecycleOwner, Observer {
             Timber.e(it.toString())
             renderState(it)
+        })
+        mealsForCategoryViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
+            Timber.e(it.toString())
+            renderStateMeal(it)
         })
         // Pravimo subscription kad observablu koji je vezan za getAll iz baze
         // Na svaku promenu tabele, obserrvable ce emitovati na onNext sve elemente
@@ -88,7 +118,9 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         when (state) {
             is CategoriesState.Success -> {
                 showLoadingState(false)
+                binding.recyclerViewCategories.adapter = adapter
                 adapter.submitList(state.categories)
+                adapter.notifyDataSetChanged()
             }
             is CategoriesState.Error -> {
                 showLoadingState(false)
@@ -104,6 +136,27 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         }
     }
 
+    private fun renderStateMeal(state: MealsForCategoryState) {
+        when (state) {
+            is MealsForCategoryState.Success -> {
+                showLoadingState(false)
+                binding.recyclerViewCategories.adapter = mealAdapter
+                mealAdapter.submitList(state.mealsForCategory)
+                mealAdapter.notifyDataSetChanged()
+            }
+            is MealsForCategoryState.Error -> {
+                showLoadingState(false)
+                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+            }
+            is MealsForCategoryState.DataFetched -> {
+                showLoadingState(false)
+                Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
+            }
+            is MealsForCategoryState.Loading -> {
+                showLoadingState(true)
+            }
+        }
+    }
     private fun showLoadingState(loading: Boolean) {
         binding.categoriesTV.isVisible = !loading
         binding.filterCategoriesET.isVisible = !loading
@@ -116,4 +169,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        categoryViewModel.getAllCategories()
+    }
 }

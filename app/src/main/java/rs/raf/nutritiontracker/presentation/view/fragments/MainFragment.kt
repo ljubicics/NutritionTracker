@@ -43,11 +43,13 @@ class MainFragment : Fragment(R.layout.bottom_navigation) {
     }
 
     private fun initBottomNav() {
+
         binding.bottomNavigation.setOnItemSelectedListener {
 
             when(it.itemId) {
                 R.id.navigation_1 -> {
                     binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_1, false)
+                    viewPager.adapter?.notifyDataSetChanged()
                 }
                 R.id.navigation_2 -> {
                     binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_2, false)
@@ -55,8 +57,17 @@ class MainFragment : Fragment(R.layout.bottom_navigation) {
                 R.id.navigation_3 -> {
                     binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_3, false)
                 }
+                R.id.navigation_4 -> {
+                    binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_4, false)
+                }
             }
                 true
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

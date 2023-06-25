@@ -8,6 +8,7 @@ import rs.raf.nutritiontracker.data.models.Resource
 interface MealRepository {
     fun fetchAll(): Observable<Resource<Unit>>
     fun fetchMealsForCategory(category: String): Observable<Resource<Unit>>
+    fun fetchMealByName(name: String): Observable<Resource<Unit>>
     fun getAll(): Observable<List<Meal>>
     fun getAllByName(name: String): Observable<List<Meal>>
     fun insert(meal: Meal): Completable

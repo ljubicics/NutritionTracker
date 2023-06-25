@@ -5,29 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
-import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
-import rs.raf.nutritiontracker.presentation.contract.CategoryContract
-import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
-import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
+import rs.raf.nutritiontracker.data.models.Category
+import rs.raf.nutritiontracker.databinding.FragmentMealsforcategoryBinding
+import rs.raf.nutritiontracker.presentation.contract.MealContract
+import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
+import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
+import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
+import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
 import timber.log.Timber
 
-class ProfileFragment : Fragment(R.layout.fragment_categories) {private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
+class MealsForCategoryFragment(
+    private val category: Category
+) : Fragment(R.layout.fragment_mealsforcategory){
+    private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsForCategoryViewModel>()
+    private val mealViewModel: MealContract.ViewModel by sharedViewModel<MealViewModel>()
 
-    private var _binding: FragmentCategoriesBinding? = null
+    private var _binding: FragmentMealsforcategoryBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var adapter: MealForCategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        _binding = FragmentMealsforcategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,71 +48,71 @@ class ProfileFragment : Fragment(R.layout.fragment_categories) {private val cate
     }
 
     private fun init() {
-//        initUi()
-//        initObservers()
+        initUi()
+        initObservers()
     }
 
     private fun initUi() {
-//        initRecycler()
-//        initListeners()
+        initRecycler()
+        initListeners()
     }
 
     private fun initRecycler() {
-//        binding.listRv.layoutManager = LinearLayoutManager(context)
-//        adapter = MovieAdapter()
-//        binding.listRv.adapter = adapter
+        binding.recyclerViewMealsForCat.layoutManager = LinearLayoutManager(context)
+        adapter = MealForCategoryAdapter()
+        binding.recyclerViewMealsForCat.adapter = adapter
     }
 
     private fun initListeners() {
-//        binding.inputEt.doAfterTextChanged {
+//        binding.filterCategoriesET.doAfterTextChanged {
 //            val filter = it.toString()
-//            mainViewModel.getMoviesByName(filter)
+//            categoryViewModel.getCategoriesByName(filter)
 //        }
     }
 
     private fun initObservers() {
-        categoryViewModel.categoriesState.observe(viewLifecycleOwner, Observer {
+        mealsForCategoryViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
             Timber.e(it.toString())
             renderState(it)
         })
         // Pravimo subscription kad observablu koji je vezan za getAll iz baze
         // Na svaku promenu tabele, obserrvable ce emitovati na onNext sve elemente
         // koji zadovoljavaju query
-        categoryViewModel.getAllCategories()
+        mealsForCategoryViewModel.getAllMealsForCategory(category.strCategory)
         // Pokrecemo operaciju dovlacenja podataka sa servera, kada podaci stignu,
         // bice sacuvani u bazi, tada ce se triggerovati observable na koji smo se pretplatili
         // preko metode getAllMovies()
 //        categoryViewModel.fetchAllCategories()
     }
 
-    private fun renderState(state: CategoriesState) {
+    private fun renderState(state: MealsForCategoryState) {
         when (state) {
-            is CategoriesState.Success -> {
+            is MealsForCategoryState.Success -> {
                 showLoadingState(false)
-//                adapter.submitList(state.categories)
+                adapter.submitList(state.mealsForCategory)
             }
-            is CategoriesState.Error -> {
+            is MealsForCategoryState.Error -> {
                 showLoadingState(false)
                 Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
             }
-            is CategoriesState.DataFetched -> {
+            is MealsForCategoryState.DataFetched -> {
                 showLoadingState(false)
                 Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
             }
-            is CategoriesState.Loading -> {
+            is MealsForCategoryState.Loading -> {
                 showLoadingState(true)
             }
         }
     }
 
     private fun showLoadingState(loading: Boolean) {
-//        binding.inputEt.isVisible = !loading
-//        binding.listRv.isVisible = !loading
-//        binding.loadingPb.isVisible = loading
+        binding.mealsForCatTV.isVisible = !loading
+        binding.progressBar2.isVisible = loading
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

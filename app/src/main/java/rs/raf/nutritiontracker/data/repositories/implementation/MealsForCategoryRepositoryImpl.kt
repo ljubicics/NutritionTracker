@@ -129,4 +129,19 @@ class MealsForCategoryRepositoryImpl(
                 }
             }
     }
+
+    override fun getAllMealsByName(mealName: String): Observable<List<MealForCategory>> {
+        return localMealsForCategoryDataSource
+            .getByName(mealName)
+            .map {
+                it.map {
+                    MealForCategory(
+                        it.strMeal,
+                        it.strMealThumb,
+                        it.idMeal,
+                        it.strCategory
+                    )
+                }
+            }
+    }
 }

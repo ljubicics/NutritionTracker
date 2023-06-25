@@ -4,31 +4,27 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.ListFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.CategoriesFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.FilterFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.PlanFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.ProfileFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.FilterByAreaFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.FilterByCategoryFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.FilterByIngredientFragment
 
-class PagerAdapter(
+class FilterPagerAdapter(
     fragmentManager: FragmentManager,
     private val context: Context
 ) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {
-        private const val ITEM_COUNT = 4
+        private const val ITEM_COUNT = 3
         const val FRAGMENT_1 = 0
         const val FRAGMENT_2 = 1
         const val FRAGMENT_3 = 2
-        const val FRAGMENT_4 = 3
     }
 
     override fun getItem(position: Int): Fragment {
         return when(position) {
-            FRAGMENT_1 -> CategoriesFragment()
-            FRAGMENT_2 -> FilterFragment()
-            FRAGMENT_3 -> PlanFragment()
-            else -> ProfileFragment()
+            FRAGMENT_1 -> FilterByCategoryFragment()
+            FRAGMENT_2 -> FilterByAreaFragment()
+            else -> FilterByIngredientFragment()
         }
     }
 
@@ -38,10 +34,9 @@ class PagerAdapter(
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when(position) {
-            FRAGMENT_1 -> return "1"
-            FRAGMENT_2 -> return "2"
-            FRAGMENT_3-> return "3"
-            else -> return "4"
+            FRAGMENT_1 -> "1"
+            FRAGMENT_2 -> "2"
+            else -> "3"
         }
     }
 

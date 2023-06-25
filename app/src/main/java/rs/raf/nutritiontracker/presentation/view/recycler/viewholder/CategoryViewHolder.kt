@@ -8,12 +8,19 @@ import java.util.function.Consumer
 
 class CategoryViewHolder(
     private val itemBinding: LayoutItemCategoryBinding,
-    var onItemMoreClicked: (Int) -> Unit
+    var onItemMoreClicked: (Int) -> Unit,
+    var listener: (Int) -> Unit
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
     init {
+        // ovde stavljam listener samo na konktretnu sliku u view-u koja se binduje
         itemBinding.moreAboutCatIB.setOnClickListener{
             onItemMoreClicked.invoke(bindingAdapterPosition)
+        }
+
+        // ovde stavljam listener na celu View komponentu
+        itemView.setOnClickListener{
+           listener.invoke(bindingAdapterPosition)
         }
     }
 

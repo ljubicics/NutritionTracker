@@ -102,6 +102,28 @@ class MealViewModel(
         subscriptions.add(subscription)
     }
 
+    override fun fetchAllMealsByName(name: String) {
+        val subscription = mealRepository
+            .fetchMealByName(name)
+            .startWith(Resource.Loading()) //Kada se pokrene fetch hocemo da postavimo stanje na Loading
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    when(it) {
+                        is Resource.Loading -> mealsState.value = MealsState.Loading
+                        is Resource.Success -> mealsState.value = MealsState.DataFetched
+                        is Resource.Error -> mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                    }
+                },
+                {
+                    mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
     override fun getAllMeals() {
         TODO("Not yet implemented")
     }

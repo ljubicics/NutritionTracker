@@ -49,7 +49,14 @@ class CategoryRepositoryImpl(
     }
 
     override fun getAllByName(name: String): Observable<List<Category>> {
-        TODO("Not yet implemented")
+        return localDataSource
+            .getByName(name)
+            .map {
+                it.map {
+                    Category(it.idCategory, it.strCategory,
+                        it.strCategoryThumb, it.strCategoryDescription)
+                }
+            }
     }
 
     override fun insert(category: Category): Completable {

@@ -11,13 +11,17 @@ import rs.raf.nutritiontracker.presentation.view.recycler.diff.CategoryDiffCallb
 import rs.raf.nutritiontracker.presentation.view.recycler.viewholder.CategoryViewHolder
 
 class CategoryAdapter(
-    var onItemMoreClicked: (Category) -> Unit
+    var onItemMoreClicked: (Category) -> Unit,
+    var listener: (Category) -> Unit
 ) : ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val itemBinding = LayoutItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CategoryViewHolder(itemBinding, onItemMoreClicked = {
             val category: Category = getItem(it)
             onItemMoreClicked.invoke(category)
+        }, listener = {
+            val category: Category = getItem(it)
+            listener.invoke(category)
         })
     }
 

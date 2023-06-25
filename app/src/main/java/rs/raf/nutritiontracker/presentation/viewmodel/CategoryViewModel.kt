@@ -95,7 +95,20 @@ class CategoryViewModel(
     }
 
     override fun getCategoriesByName(name: String) {
-        TODO("Not yet implemented")
+        val subscription = categoryRepository
+            .getAllByName(name)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    categoriesState.value = CategoriesState.Success(it)
+                },
+                {
+                    categoriesState.value = CategoriesState.Error("Error happened while fetching data from db")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
     }
 
     override fun addCateogry(meal: Meal) {

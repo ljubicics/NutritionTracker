@@ -85,6 +85,10 @@ class MainActivity : AppCompatActivity() {
 //        })
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     private fun splashScreen() {
         val splashScreen : SplashScreen = installSplashScreen()
         splashScreen.setKeepVisibleCondition{
@@ -128,4 +132,12 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
