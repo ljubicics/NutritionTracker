@@ -20,6 +20,7 @@ import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.contract.UserContract
 import rs.raf.nutritiontracker.presentation.view.fragments.CategoriesFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.LoginFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.MainFragment
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 if (userString != null) {
                     // Ukoliko user postoji, postavite fragment za rad sa aplikacijom
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.mainFragmentFcv, CategoriesFragment())
+                    transaction.replace(R.id.mainFragmentFcv, MainFragment())
                     transaction.commit()
                 } else {
                     // Ukoliko user ne postoji, postavite LoginFragment

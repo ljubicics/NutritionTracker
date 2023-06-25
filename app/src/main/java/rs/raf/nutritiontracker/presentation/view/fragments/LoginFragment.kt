@@ -73,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             }
                         }
                         val transaction = parentFragmentManager.beginTransaction()
-                        transaction.replace(R.id.mainFragmentFcv, CategoriesFragment())
+                        transaction.replace(R.id.mainFragmentFcv, MainFragment())
                         transaction.commit()
                     }
                     is UserState.Error -> {
