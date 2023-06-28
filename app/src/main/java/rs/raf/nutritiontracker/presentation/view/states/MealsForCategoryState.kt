@@ -1,6 +1,5 @@
 package rs.raf.nutritiontracker.presentation.view.states
 
-import rs.raf.nutritiontracker.data.models.Category
 import rs.raf.nutritiontracker.data.models.MealForCategory
 
 sealed class MealsForCategoryState {

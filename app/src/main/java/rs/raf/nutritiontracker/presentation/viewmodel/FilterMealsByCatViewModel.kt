@@ -6,7 +6,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import rs.raf.nutritiontracker.data.models.Resource
 import rs.raf.nutritiontracker.data.repositories.specification.MealsForCategoryRepository
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.view.states.AddMealsForCategoryState
@@ -14,7 +13,7 @@ import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class MealsForCategoryViewModel(
+class FilterMealsByCatViewModel(
     private val mealsForCategoryRepository: MealsForCategoryRepository
 ) : ViewModel(), MealsForCategoryContract.ViewModel {
     private val subscriptions = CompositeDisposable()
@@ -51,47 +50,16 @@ class MealsForCategoryViewModel(
         subscriptions.add(subscription)
     }
 
+    override fun getAllMeals() {
+        TODO("Not yet implemented")
+    }
+
     override fun fetchAllMealsForCategory() {
-        val subscription = mealsForCategoryRepository
-            .fetchAll()
-            .startWith(Resource.Loading()) //Kada se pokrene fetch hocemo da postavimo stanje na Loading
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    when(it) {
-                        is Resource.Loading -> mealsForCategoryState.value = MealsForCategoryState.Loading
-                        is Resource.Success -> mealsForCategoryState.value = MealsForCategoryState.DataFetched
-                        is Resource.Error -> mealsForCategoryState.value = MealsForCategoryState.Error("Error happened while fetching data from the server")
-                    }
-                },
-                {
-                    mealsForCategoryState.value = MealsForCategoryState.Error("Error happened while fetching data from the server")
-                    Timber.e(it)
-                }
-            )
-        subscriptions.add(subscription)
+        TODO("Not yet implemented")
     }
 
     override fun fetchAllMealsForArea(area: String) {
         TODO("Not yet implemented")
-    }
-
-    override fun getAllMeals() {
-        val subscription = mealsForCategoryRepository
-            .getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    mealsForCategoryState.value = MealsForCategoryState.Success(it)
-                },
-                {
-                    mealsForCategoryState.value = MealsForCategoryState.Error("Error happened while fetching data from db")
-                    Timber.e(it)
-                }
-            )
-        subscriptions.add(subscription)
     }
 
     override fun getAllMealsForCategory(categoryName: String) {
@@ -128,8 +96,4 @@ class MealsForCategoryViewModel(
         subscriptions.add(subscription)
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        subscriptions.dispose()
-    }
 }

@@ -9,22 +9,21 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
-import rs.raf.nutritiontracker.data.models.Category
+import rs.raf.nutritiontracker.data.models.MealForCategory
 import rs.raf.nutritiontracker.databinding.FragmentFilterCategoryBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
-import rs.raf.nutritiontracker.presentation.view.recycler.adapter.CategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
-import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.FilterMealsByCatViewModel
 import timber.log.Timber
 
 class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
@@ -33,10 +32,11 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var adapter: MealForCategoryAdapter
-    private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsForCategoryViewModel>()
+    private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<FilterMealsByCatViewModel>()
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
     private lateinit var spinner: Spinner
     val dataList = mutableListOf<String>()
+    private lateinit var listOfMealsByCat: List<MealForCategory>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,9 +54,9 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     }
 
     private fun init() {
-        categoryViewModel.fetchAllCategories()
         initUi()
         initObservers()
+        initListeners()
     }
 
     private fun initUi() {
@@ -64,9 +64,33 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     }
 
     private fun initRecycler() {
-        binding.filterCategoryRecycler.layoutManager = LinearLayoutManager(context)
         adapter = MealForCategoryAdapter()
         binding.filterCategoryRecycler.adapter = adapter
+        binding.filterCategoryRecycler.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun initListeners() {
+        binding.filterCategoryFragmentET.doAfterTextChanged {
+            val filter = it.toString()
+            mealsForCategoryViewModel.getAllMealsByName(filter)
+        }
+        binding.toggleButton.setOnCheckedChangeListener{buttonView, isChecked ->
+            if (isChecked) {
+                val layoutManager = binding.filterCategoryRecycler.layoutManager
+                listOfMealsByCat = listOfMealsByCat.sortedBy { it.strMeal }
+                adapter.submitList(listOfMealsByCat)
+                if (layoutManager != null) {
+                    layoutManager.scrollToPosition(0)
+                }
+            } else {
+                val layoutManager = binding.filterCategoryRecycler.layoutManager
+                listOfMealsByCat = listOfMealsByCat.sortedByDescending { it.strMeal }
+                adapter.submitList(listOfMealsByCat)
+                if (layoutManager != null) {
+                    layoutManager.scrollToPosition(0)
+                }
+            }
+        }
     }
 
     private fun initObservers() {
@@ -88,13 +112,13 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
                 // Obrada kada nijedna stavka nije izabrana
             }
         }
-
     }
 
     private fun renderStateMeal(state: MealsForCategoryState) {
         when (state) {
             is MealsForCategoryState.Success -> {
                 showLoadingState(false)
+                listOfMealsByCat = state.mealsForCategory
                 adapter.submitList(state.mealsForCategory)
             }
             is MealsForCategoryState.Error -> {
@@ -117,12 +141,12 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
                 showLoadingState(false)
                 val spinner = binding.spinner
                 val categories = state.categories // Dobijanje liste kategorija iz stanja
-
-
                 for (category in categories) {
-                    dataList.add(category.strCategory) // Dodajte ime kategorije u dataList
+                    if(dataList.size < 14) {
+                        dataList.add(category.strCategory) // Dodajte ime kategorije u dataList
+                    }
                 }
-
+                println("Data list velicina je: " + dataList.size)
                 val arrayAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, dataList)
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinner.adapter = arrayAdapter

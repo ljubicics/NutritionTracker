@@ -75,7 +75,6 @@ class MealsForCategoryRepositoryImpl(
                 for(item in listOfStrPlusAllMeals) {
                     for(i in item.allMealsForCategoryResponse.meals) {
                         val entity = MealForCategoryEntity (
-                                        mealForCatId = 0,
                                         i.strMeal,
                                         i.strMealThumb,
                                         i.idMeal,
@@ -98,6 +97,15 @@ class MealsForCategoryRepositoryImpl(
             }
         )
         return Observable.just(Resource.Success(Unit))
+    }
+
+    override fun fetchAllByArea(area: String): Observable<Resource<Unit>> {
+
+        return remoteDataSource
+            .fetchAllMealsByArea(area)
+            .map {
+                Resource.Success(Unit)
+            }
     }
 
     override fun getAll(): Observable<List<MealForCategory>> {

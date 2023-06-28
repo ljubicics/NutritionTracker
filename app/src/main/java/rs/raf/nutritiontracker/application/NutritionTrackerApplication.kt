@@ -7,8 +7,11 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import rs.raf.nutritiontracker.modules.areaModule
 import rs.raf.nutritiontracker.modules.categoryModule
 import rs.raf.nutritiontracker.modules.coreModule
+import rs.raf.nutritiontracker.modules.filterMealsByAreaModule
+import rs.raf.nutritiontracker.modules.filterMealsByCatModule
 import rs.raf.nutritiontracker.modules.mealModule
 import rs.raf.nutritiontracker.modules.mealsForCategoryModule
 import rs.raf.nutritiontracker.modules.userModule
@@ -35,7 +38,10 @@ class NutritionTrackerApplication : Application() {
             mealModule,
             categoryModule,
             mealsForCategoryModule,
-            userModule
+            userModule,
+            filterMealsByCatModule,
+            filterMealsByAreaModule,
+            areaModule
         )
         startKoin {
             androidLogger(Level.ERROR)
