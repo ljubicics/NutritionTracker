@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.BottomNavigationBinding
 import rs.raf.nutritiontracker.databinding.FragmentLoginBinding
+import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.view.adapters.PagerAdapter
+import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 
 class MainFragment : Fragment(R.layout.bottom_navigation) {
     lateinit var viewPager : ViewPager
@@ -65,6 +68,9 @@ class MainFragment : Fragment(R.layout.bottom_navigation) {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

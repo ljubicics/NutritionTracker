@@ -14,8 +14,13 @@ import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class MealsForCategoryViewModel(
-    private val mealsForCategoryRepository: MealsForCategoryRepository
+
+/*
+ViewModel simmilar to MealsForCategoryViewModel, used to save all meals
+When filtering on loading page
+ */
+class MealsLoadingPageViewModel(
+    val mealsForCategoryRepository: MealsForCategoryRepository
 ) : ViewModel(), MealsForCategoryContract.ViewModel {
     private val subscriptions = CompositeDisposable()
     override val mealsForCategoryState: MutableLiveData<MealsForCategoryState> = MutableLiveData()

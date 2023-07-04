@@ -14,7 +14,6 @@ class CategoryRepositoryImpl(
     private val localDataSource: CategoryDao,
     private val remoteDataSource: CategoryService
 ) : CategoryRepository {
-    // TODO: Dodati fetchAll metodu koja skuplja podatke sa interneta i stavlja ih u bazu
         override fun fetchAll(): Observable<Resource<Unit>> {
             return remoteDataSource
                 .getAllCategories()

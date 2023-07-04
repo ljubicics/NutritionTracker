@@ -48,14 +48,6 @@ class FilterMealsByAreaViewModel (
 //        subscriptions.add(subscription)
 //    }
 
-    override fun getAllMeals() {
-        TODO("Not yet implemented")
-    }
-
-    override fun fetchAllMealsForCategory() {
-        TODO("Not yet implemented")
-    }
-
     override fun fetchAllMealsForArea(area: String) {
         val subscription = mealsForAreaRepository
             .fetchAllByArea(area)
@@ -76,13 +68,5 @@ class FilterMealsByAreaViewModel (
                 }
             )
         subscriptions.add(subscription)
-    }
-
-    override fun getAllMealsForCategory(categoryName: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAllMealsByName(mealName: String) {
-        TODO("Not yet implemented")
     }
 }

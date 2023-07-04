@@ -10,9 +10,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
+import rs.raf.nutritiontracker.data.models.Category
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
+import rs.raf.nutritiontracker.modules.mealsLoadingPageModule
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
@@ -24,11 +27,15 @@ import rs.raf.nutritiontracker.presentation.view.states.MealsState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.MealsLoadingPageViewModel
 import timber.log.Timber
 
+
+// TODO: Dodati pronalazenje svih jela po sastojku, potreban je novi viewmodel koji ce da cuva jela
+//  i neki checkbox da li zelite da pronadjete jela po sastojku
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
-    private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsForCategoryViewModel>()
+    private val mealsLoadingPageViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsLoadingPageViewModel>()
 
     private var _binding: FragmentCategoriesBinding? = null
     // This property is only valid between onCreateView and
@@ -89,7 +96,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
                 if(list.contains(filter)) {
                     categoryViewModel.getCategoriesByName(filter)
                 } else {
-                    mealsForCategoryViewModel.getAllMealsByName(filter)
+                    mealsLoadingPageViewModel.getAllMealsByName(filter)
                 }
             }
         }
@@ -100,7 +107,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             Timber.e(it.toString())
             renderState(it)
         })
-        mealsForCategoryViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
+        mealsLoadingPageViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
             Timber.e(it.toString())
             renderStateMeal(it)
         })
@@ -169,8 +176,4 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         _binding = null
     }
 
-    override fun onResume() {
-        super.onResume()
-        categoryViewModel.getAllCategories()
-    }
 }

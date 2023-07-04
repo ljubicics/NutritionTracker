@@ -8,5 +8,4 @@ val filterMealsByCatModule = module {
 
     viewModel { FilterMealsByCatViewModel(mealsForCategoryRepository = get()) }
 
-
 }

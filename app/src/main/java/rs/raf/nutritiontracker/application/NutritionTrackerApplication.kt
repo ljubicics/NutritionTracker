@@ -12,8 +12,10 @@ import rs.raf.nutritiontracker.modules.categoryModule
 import rs.raf.nutritiontracker.modules.coreModule
 import rs.raf.nutritiontracker.modules.filterMealsByAreaModule
 import rs.raf.nutritiontracker.modules.filterMealsByCatModule
+import rs.raf.nutritiontracker.modules.filterMealsByIngredientViewModel
 import rs.raf.nutritiontracker.modules.mealModule
 import rs.raf.nutritiontracker.modules.mealsForCategoryModule
+import rs.raf.nutritiontracker.modules.mealsLoadingPageModule
 import rs.raf.nutritiontracker.modules.userModule
 import timber.log.Timber
 
@@ -41,7 +43,9 @@ class NutritionTrackerApplication : Application() {
             userModule,
             filterMealsByCatModule,
             filterMealsByAreaModule,
-            areaModule
+            filterMealsByIngredientViewModel,
+            areaModule,
+            mealsLoadingPageModule
         )
         startKoin {
             androidLogger(Level.ERROR)
