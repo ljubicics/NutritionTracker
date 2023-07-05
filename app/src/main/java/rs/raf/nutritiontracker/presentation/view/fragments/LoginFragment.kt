@@ -88,4 +88,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun initObservers() {
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

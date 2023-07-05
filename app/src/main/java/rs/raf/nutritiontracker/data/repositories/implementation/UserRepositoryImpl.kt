@@ -27,6 +27,7 @@ class UserRepositoryImpl(
     }
 
     override fun insertUser(user: UserEntity): Completable {
+
         return localDataSource
             .insert(user)
     }

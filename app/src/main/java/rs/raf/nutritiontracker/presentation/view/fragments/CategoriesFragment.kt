@@ -13,28 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
-import rs.raf.nutritiontracker.data.models.Category
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
-import rs.raf.nutritiontracker.modules.mealsLoadingPageModule
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
-import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.CategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
-import rs.raf.nutritiontracker.presentation.view.states.MealsState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
-import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
-import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealsLoadingPageViewModel
 import timber.log.Timber
 
 
-// TODO: Dodati pronalazenje svih jela po sastojku, potreban je novi viewmodel koji ce da cuva jela
-//  i neki checkbox da li zelite da pronadjete jela po sastojku
+// TODO: Dodati pronalazenje svih jela po sastojku, dodati neki toggle koji ce da pita da li se trazi jelo po sastojku!!
 class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
+    // cuva jela iz baze koja imaju trazeno ime
     private val mealsLoadingPageViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsLoadingPageViewModel>()
 
     private var _binding: FragmentCategoriesBinding? = null

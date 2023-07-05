@@ -13,6 +13,7 @@ import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.data.models.User
 import rs.raf.nutritiontracker.data.models.entities.UserEntity
 import rs.raf.nutritiontracker.databinding.ActivityMainBinding
+import rs.raf.nutritiontracker.databinding.ActivityMainFragmentBinding
 import rs.raf.nutritiontracker.modules.coreModule
 import rs.raf.nutritiontracker.presentation.contract.AreaContract
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
@@ -36,7 +37,7 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainFragmentBinding
     private val categoryViewModel: CategoryContract.ViewModel by viewModel<CategoryViewModel>()
     private val areaViewModel: AreaContract.ViewModel by viewModel<AreaViewModel>()
     private val mealViewModel: MealContract.ViewModel by viewModel<MealViewModel>()
@@ -76,13 +77,13 @@ class MainActivity : AppCompatActivity() {
 //            )
 //        binding.tabLayout.setupWithViewPager(binding.viewPager)
 
-        val user = UserEntity(
-            userId = 0,
-            username = "strahinja",
-            password = "strahinja",
-            email = "strahinja.ljubicic@gmail.com"
-        )
-        userViewModel.insertUser(user)
+//        val user = UserEntity(
+//            userId = 0,
+//            username = "strahinja",
+//            password = "strahinja",
+//            email = "strahinja.ljubicic@gmail.com"
+//        )
+//        userViewModel.insertUser(user)
     }
 
     private fun initObservers() {

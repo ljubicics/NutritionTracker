@@ -43,8 +43,9 @@ class PagerAdapter(
         return when(position) {
             FRAGMENT_1 -> return "1"
             FRAGMENT_2 -> return "2"
-            FRAGMENT_3-> return "3"
-            else -> return "4"
+            FRAGMENT_3 -> return "3"
+            FRAGMENT_4 -> return "4"
+            else -> return "5"
         }
     }
 

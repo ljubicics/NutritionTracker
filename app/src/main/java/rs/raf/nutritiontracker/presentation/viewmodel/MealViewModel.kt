@@ -56,7 +56,6 @@ class MealViewModel(
     @SuppressLint("CheckResult")
     override fun fetchAllMeals() {
 //        var categoryStrs = mutableListOf<String>() // lista naziva kategorija
-        // TODO: Ovde zelim da pozovem samo metodu iz repository-ja to znaci da treba da pozovem metodu iz meals for category
         // Pa onda da prolazim kroz to i da preko id-ja dobijem celo jelo
         // Ali se to mora resavati u meal repository-ju
         val subscription = mealRepository

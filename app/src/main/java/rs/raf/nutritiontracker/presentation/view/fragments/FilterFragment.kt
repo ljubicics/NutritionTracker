@@ -35,4 +35,9 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
         binding.viewPager2.adapter = FilterPagerAdapter( parentFragmentManager, requireContext())
         binding.tabLayout.setupWithViewPager(binding.viewPager2)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
