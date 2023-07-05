@@ -29,17 +29,17 @@
 
     <EditText
         android:id="@+id/filterCategoriesET"
-        android:layout_width="250dp"
+        android:layout_width="240dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Enter category or meal name"
+        android:layout_marginBottom="52dp"
         android:background="@drawable/edittext_box"
+        android:ems="10"
+        android:hint="Enter category or meal name"
+        android:inputType="text"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewCategories"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
@@ -52,4 +52,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/categoriesSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="By Ingredient"
+        android:textColor="@color/black"
+        android:theme="@style/switchOnColor"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewCategories"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toEndOf="@+id/filterCategoriesET"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.685" />
+
+    <Button
+        android:id="@+id/findByIngredientButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Find"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewCategories"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filterCategoriesET" />
 </androidx.constraintlayout.widget.ConstraintLayout>

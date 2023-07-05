@@ -13,14 +13,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
+import rs.raf.nutritiontracker.data.models.ShortMeal
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
+import rs.raf.nutritiontracker.presentation.contract.MealsForIngredientContract
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.CategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
+import rs.raf.nutritiontracker.presentation.view.recycler.adapter.ShortMealAdapter
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
+import rs.raf.nutritiontracker.presentation.view.states.MealsForIngredientState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.FilterMealsByIngredientViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealsLoadingPageViewModel
 import timber.log.Timber
 
@@ -30,6 +35,9 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
     // cuva jela iz baze koja imaju trazeno ime
     private val mealsLoadingPageViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsLoadingPageViewModel>()
+    private val mealsForIngredientViewModel: MealsForIngredientContract.ViewModel by sharedViewModel<FilterMealsByIngredientViewModel>()
+    private lateinit var listOfMealsByIngredient: List<ShortMeal>
+
 
     private var _binding: FragmentCategoriesBinding? = null
     // This property is only valid between onCreateView and
@@ -37,6 +45,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
     private val binding get() = _binding!!
     private lateinit var adapter: CategoryAdapter
     private lateinit var mealAdapter: MealForCategoryAdapter
+    private lateinit var shortMealAdapter: ShortMealAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,23 +85,42 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             transaction.commit()
         })
         mealAdapter = MealForCategoryAdapter()
+        shortMealAdapter = ShortMealAdapter()
         binding.recyclerViewCategories.adapter = adapter
     }
 
     private fun initListeners() {
+        binding.findByIngredientButton.isVisible = false
         binding.filterCategoriesET.doAfterTextChanged {
             val filter = it.toString()
-            if(filter == "") {
-                categoryViewModel.getAllCategories()
-            } else {
-                val list: List<String> = listOf("Beef", "Chicken", "Dessert", "Lamb", "Miscellaneous", "Pasta",
-                    "Pork", "Seafood", "Side", "Starter", "Vegan", "Vegetarian", "Breakfast", "Goat")
-                if(list.contains(filter)) {
-                    categoryViewModel.getCategoriesByName(filter)
+            if(!binding.categoriesSwitch.isChecked) {
+                if (filter == "") {
+                    categoryViewModel.getAllCategories()
                 } else {
-                    mealsLoadingPageViewModel.getAllMealsByName(filter)
+                    val list: List<String> = listOf(
+                        "Beef", "Chicken", "Dessert", "Lamb", "Miscellaneous", "Pasta",
+                        "Pork", "Seafood", "Side", "Starter", "Vegan", "Vegetarian", "Breakfast", "Goat"
+                    )
+                    if (list.contains(filter)) {
+                        categoryViewModel.getCategoriesByName(filter)
+                    } else {
+                        mealsLoadingPageViewModel.getAllMealsByName(filter)
+                    }
                 }
             }
+        }
+
+        binding.categoriesSwitch.setOnCheckedChangeListener{buttonView, isChecked ->
+            binding.findByIngredientButton.isVisible = isChecked
+            if(!isChecked) {
+                categoryViewModel.getAllCategories()
+                binding.filterCategoriesET.setText("")
+            }
+        }
+        binding.findByIngredientButton.setOnClickListener {
+            val text = binding.filterCategoriesET.text
+            val replacedString = text.replace(Regex(" "), "_").toLowerCase()
+            mealsForIngredientViewModel.fetchAllMealsForIngredient(replacedString)
         }
     }
 
@@ -104,6 +132,10 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
         mealsLoadingPageViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
             Timber.e(it.toString())
             renderStateMeal(it)
+        })
+        mealsForIngredientViewModel.mealsForIngredientState.observe(viewLifecycleOwner, Observer {
+            Timber.e(it.toString())
+            renderStateMealForIngredient(it)
         })
         // Pravimo subscription kad observablu koji je vezan za getAll iz baze
         // Na svaku promenu tabele, obserrvable ce emitovati na onNext sve elemente
@@ -158,11 +190,43 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             }
         }
     }
+    private fun renderStateMealForIngredient(state: MealsForIngredientState) {
+        when (state) {
+            is MealsForIngredientState.Success -> {
+                showLoadingState(false)
+                binding.recyclerViewCategories.adapter = shortMealAdapter
+                listOfMealsByIngredient = state.mealsForCategory.map {
+                    ShortMeal(
+                        it.strMeal,
+                        it.strMealThumb,
+                        it.idMeal,
+                    )
+                }
+                shortMealAdapter.submitList(listOfMealsByIngredient)
+            }
+            is MealsForIngredientState.Error -> {
+                showLoadingState(false)
+                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+            }
+            is MealsForIngredientState.DataFetched -> {
+                showLoadingState(false)
+                Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
+            }
+            is MealsForIngredientState.Loading -> {
+                showLoadingState(true)
+            }
+        }
+    }
     private fun showLoadingState(loading: Boolean) {
         binding.categoriesTV.isVisible = !loading
         binding.filterCategoriesET.isVisible = !loading
         binding.recyclerViewCategories.isVisible = !loading
         binding.progressBar.isVisible = loading
+    }
+
+    override fun onResume() {
+        super.onResume()
+        categoryViewModel.getAllCategories()
     }
 
     override fun onDestroyView() {

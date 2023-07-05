@@ -68,10 +68,7 @@ class FilterByIngredientFragment : Fragment(R.layout.fragment_filter_ingredient)
     private fun initListeners() {
         binding.findByIngredientButton.setOnClickListener {
             val text = binding.ingredientET.text
-            println("VEJIKO1 " + text)
             val replacedString = text.replace(Regex(" "), "_").toLowerCase()
-            println("VEJIKO2 " + replacedString)
-
             mealsForIngredientViewModel.fetchAllMealsForIngredient(replacedString)
         }
         binding.filterIngredientFragmentET.doAfterTextChanged {
