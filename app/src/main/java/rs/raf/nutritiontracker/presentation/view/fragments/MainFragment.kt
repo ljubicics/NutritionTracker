@@ -63,6 +63,9 @@ class MainFragment : Fragment(R.layout.bottom_navigation) {
                 R.id.navigation_4 -> {
                     binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_4, false)
                 }
+                R.id.navigation_5 -> {
+                    binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_5, false)
+                }
             }
                 true
         }

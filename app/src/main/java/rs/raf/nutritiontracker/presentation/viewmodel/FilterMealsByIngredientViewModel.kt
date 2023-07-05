@@ -32,11 +32,11 @@ class FilterMealsByIngredientViewModel (
                     when(it) {
                         is Resource.Loading -> mealsForIngredientState.value = MealsForIngredientState.Loading
                         is Resource.Success -> mealsForIngredientState.value = MealsForIngredientState.Success(it.data)
-                        is Resource.Error -> mealsForIngredientState.value = MealsForIngredientState.Error("Error happened while fetching data from the server")
+                        is Resource.Error -> mealsForIngredientState.value = MealsForIngredientState.Error("There are no meals for seleced ingredient")
                     }
                 },
                 {
-                    mealsForIngredientState.value = MealsForIngredientState.Error("Error happened while fetching data from the server")
+                    mealsForIngredientState.value = MealsForIngredientState.Error("There are no meals for seleced ingredient")
                     Timber.e(it)
                 }
             )

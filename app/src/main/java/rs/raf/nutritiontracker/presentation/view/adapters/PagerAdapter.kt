@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.ListFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.CategoriesFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.FilterFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.MealsFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.PlanFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.ProfileFragment
 
@@ -21,13 +22,15 @@ class PagerAdapter(
         const val FRAGMENT_2 = 1
         const val FRAGMENT_3 = 2
         const val FRAGMENT_4 = 3
+        const val FRAGMENT_5 = 4
     }
 
     override fun getItem(position: Int): Fragment {
         return when(position) {
             FRAGMENT_1 -> CategoriesFragment()
             FRAGMENT_2 -> FilterFragment()
-            FRAGMENT_3 -> PlanFragment()
+            FRAGMENT_3 -> MealsFragment()
+            FRAGMENT_4 -> PlanFragment()
             else -> ProfileFragment()
         }
     }

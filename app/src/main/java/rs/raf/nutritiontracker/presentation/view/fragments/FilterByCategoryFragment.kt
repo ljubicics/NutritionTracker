@@ -74,21 +74,22 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
             val filter = it.toString()
             mealsForCategoryViewModel.getAllMealsByName(filter)
         }
+        binding.toggleButton.isChecked = true
         binding.toggleButton.setOnCheckedChangeListener{buttonView, isChecked ->
             if (isChecked) {
                 val layoutManager = binding.filterCategoryRecycler.layoutManager
                 listOfMealsByCat = listOfMealsByCat.sortedBy { it.strMeal }
                 adapter.submitList(listOfMealsByCat)
-                if (layoutManager != null) {
-                    layoutManager.scrollToPosition(0)
-                }
+                binding.filterCategoryRecycler.postDelayed({
+                    layoutManager?.scrollToPosition(0)
+                }, 100)
             } else {
                 val layoutManager = binding.filterCategoryRecycler.layoutManager
                 listOfMealsByCat = listOfMealsByCat.sortedByDescending { it.strMeal }
                 adapter.submitList(listOfMealsByCat)
-                if (layoutManager != null) {
-                    layoutManager.scrollToPosition(0)
-                }
+                binding.filterCategoryRecycler.postDelayed({
+                    layoutManager?.scrollToPosition(0)
+                }, 100)
             }
         }
     }

@@ -40,7 +40,7 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
     private val areaViewModel: AreaContract.ViewModel by sharedViewModel<AreaViewModel>()
     private lateinit var spinner: Spinner
     val dataList = mutableListOf<String>()
-    private lateinit var listOfMealsByArea: List<ShortMeal>
+    private var listOfMealsByArea: List<ShortMeal> = listOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -103,7 +103,7 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
             val filter = it.toString()
             var list: MutableList<ShortMeal> = mutableListOf()
             for(meal in listOfMealsByArea) {
-                if(meal.strMeal.contains(filter)) {
+                if(meal.strMeal.contains(filter, ignoreCase = true)) {
                     list.add(meal)
                 }
             }
