@@ -84,8 +84,28 @@ class CategoriesFragment : Fragment(R.layout.fragment_categories) {
             transaction.add(R.id.mainFragmentFcv, MealsForCategoryFragment(it)).addToBackStack(null)
             transaction.commit()
         })
-        mealAdapter = MealForCategoryAdapter()
-        shortMealAdapter = ShortMealAdapter()
+        mealAdapter = MealForCategoryAdapter(
+            onItemMoreClicked = {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+                transaction.commit()
+            },
+            listener = {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+                transaction.commit()
+            }
+        )
+        shortMealAdapter = ShortMealAdapter(onItemMoreClicked = {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+            transaction.commit()
+        },
+            listener = {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+                transaction.commit()
+            })
         binding.recyclerViewCategories.adapter = adapter
     }
 

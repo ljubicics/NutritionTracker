@@ -64,7 +64,16 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     }
 
     private fun initRecycler() {
-        adapter = MealForCategoryAdapter()
+        adapter = MealForCategoryAdapter(onItemMoreClicked = {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+            transaction.commit()
+        },
+            listener = {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+                transaction.commit()
+            })
         binding.filterCategoryRecycler.adapter = adapter
         binding.filterCategoryRecycler.layoutManager = LinearLayoutManager(context)
     }

@@ -2,36 +2,25 @@ package rs.raf.nutritiontracker.presentation.view.activities
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.Observer
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import rs.raf.nutritiontracker.R
-import rs.raf.nutritiontracker.data.models.User
-import rs.raf.nutritiontracker.data.models.entities.UserEntity
-import rs.raf.nutritiontracker.databinding.ActivityMainBinding
 import rs.raf.nutritiontracker.databinding.ActivityMainFragmentBinding
-import rs.raf.nutritiontracker.modules.coreModule
-import rs.raf.nutritiontracker.presentation.contract.AreaContract
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForAreaContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.contract.UserContract
-import rs.raf.nutritiontracker.presentation.view.fragments.CategoriesFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.LoginFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.MainFragment
-import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
-import rs.raf.nutritiontracker.presentation.viewmodel.AreaViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.FilterMealsByAreaViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.UserViewModel
-import timber.log.Timber
 import java.lang.Exception
 
 
@@ -39,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainFragmentBinding
     private val categoryViewModel: CategoryContract.ViewModel by viewModel<CategoryViewModel>()
-    private val areaViewModel: AreaContract.ViewModel by viewModel<AreaViewModel>()
     private val mealViewModel: MealContract.ViewModel by viewModel<MealViewModel>()
     private val userViewModel: UserContract.ViewModel by viewModel<UserViewModel>()
     private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by viewModel<MealsForCategoryViewModel>()
@@ -63,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         initObservers()
         categoryViewModel.fetchAllCategories()
         mealsForCategoryViewModel.fetchAllMealsForCategory()
-        areaViewModel.fetchAllAreas()
+        filterMealsByAreaViewModel.fetchAllAreas()
 //        mealViewModel.fetchAllMealsForCategory("Chicken")
 //        mealViewModel.fetchAllMeals("Chicken")
     }

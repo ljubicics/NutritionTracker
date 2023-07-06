@@ -16,16 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
-import rs.raf.nutritiontracker.data.models.MealForCategory
 import rs.raf.nutritiontracker.data.models.ShortMeal
 import rs.raf.nutritiontracker.databinding.FragmentFilterAreaBinding
-import rs.raf.nutritiontracker.presentation.contract.AreaContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForAreaContract
-import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.ShortMealAdapter
 import rs.raf.nutritiontracker.presentation.view.states.AreaState
 import rs.raf.nutritiontracker.presentation.view.states.MealsForAreaState
-import rs.raf.nutritiontracker.presentation.viewmodel.AreaViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.FilterMealsByAreaViewModel
 import timber.log.Timber
 
@@ -37,7 +33,7 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
     private val binding get() = _binding!!
     private lateinit var adapter: ShortMealAdapter
     private val mealsForAreaViewModel: MealsForAreaContract.ViewModel by sharedViewModel<FilterMealsByAreaViewModel>()
-    private val areaViewModel: AreaContract.ViewModel by sharedViewModel<AreaViewModel>()
+//    private val areaViewModel: AreaContract.ViewModel by sharedViewModel<AreaViewModel>()
     private lateinit var spinner: Spinner
     val dataList = mutableListOf<String>()
     private var listOfMealsByArea: List<ShortMeal> = listOf()
@@ -67,14 +63,23 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
     }
 
     private fun initRecycler() {
-        adapter = ShortMealAdapter()
+        adapter = ShortMealAdapter(onItemMoreClicked = {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+            transaction.commit()
+        },
+            listener = {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+                transaction.commit()
+            })
         binding.filterAreaRecycler.adapter = adapter
         binding.filterAreaRecycler.layoutManager = LinearLayoutManager(context)
     }
 
     private fun initObservers() {
-        areaViewModel.getAllAreas()
-        areaViewModel.areaState.observe(viewLifecycleOwner, Observer {
+        mealsForAreaViewModel.getAllAreas()
+        mealsForAreaViewModel.areaState.observe(viewLifecycleOwner, Observer {
             renderStateArea(it)
         })
         mealsForAreaViewModel.fetchAllMealsForArea("American")

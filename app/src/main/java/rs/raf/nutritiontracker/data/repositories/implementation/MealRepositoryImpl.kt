@@ -9,7 +9,7 @@ import rs.raf.nutritiontracker.data.datasources.remote.MealService
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.entities.MealEntity
 import rs.raf.nutritiontracker.data.models.MealForCategory
-import rs.raf.nutritiontracker.data.models.MealResponse
+import rs.raf.nutritiontracker.data.models.response.MealResponse
 import rs.raf.nutritiontracker.data.models.Resource
 import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.data.repositories.specification.MealsForCategoryRepository
@@ -156,6 +156,73 @@ class MealRepositoryImpl(
             Resource.Success(Unit)
         }
 //        return Observable.just(Resource.Success(Unit))
+    }
+
+    override fun fetchMealById(id: String): Observable<Resource<List<Meal>>> {
+        val meals =  remoteDataSource
+            .fetchAllMealsById(id)
+            .map {
+                it.meals.map {
+                        Meal(
+                            it.idMeal,
+                            it.strMeal,
+                            it.strDrinkAlternate,
+                            it.strCategory,
+                            it.strArea,
+                            it.strInstructions,
+                            it.strMealThumb,
+                            it.strTags,
+                            it.strYoutube,
+                            it.strIngredient1,
+                            it.strIngredient2,
+                            it.strIngredient3,
+                            it.strIngredient4,
+                            it.strIngredient5,
+                            it.strIngredient6,
+                            it.strIngredient7,
+                            it.strIngredient8,
+                            it.strIngredient9,
+                            it.strIngredient10,
+                            it.strIngredient11,
+                            it.strIngredient12,
+                            it.strIngredient13,
+                            it.strIngredient14,
+                            it.strIngredient15,
+                            it.strIngredient16,
+                            it.strIngredient17,
+                            it.strIngredient18,
+                            it.strIngredient19,
+                            it.strIngredient20,
+                            it.strMeasure1,
+                            it.strMeasure2,
+                            it.strMeasure3,
+                            it.strMeasure4,
+                            it.strMeasure5,
+                            it.strMeasure6,
+                            it.strMeasure7,
+                            it.strMeasure8,
+                            it.strMeasure9,
+                            it.strMeasure10,
+                            it.strMeasure11,
+                            it.strMeasure12,
+                            it.strMeasure13,
+                            it.strMeasure14,
+                            it.strMeasure15,
+                            it.strMeasure16,
+                            it.strMeasure17,
+                            it.strMeasure18,
+                            it.strMeasure19,
+                            it.strMeasure20,
+                            it.strSource,
+                            it.strImageSource,
+                            it.strCreativeCommonsConfirmed,
+                            it.dateModified
+                        )
+                }
+            }
+        return meals.map {
+            Resource.Success(it)
+        }
     }
 
     override fun fetchMealByName(name: String): Observable<Resource<Unit>> {

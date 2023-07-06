@@ -12,7 +12,7 @@ import rs.raf.nutritiontracker.data.models.Resource
 import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.view.states.AddMealState
-import rs.raf.nutritiontracker.presentation.view.states.MealsState
+import rs.raf.nutritiontracker.presentation.view.states.MealState
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -20,7 +20,7 @@ class MealViewModel(
     private val mealRepository: MealRepository,
 ) : ViewModel(), MealContract.ViewModel {
     private val subscriptions = CompositeDisposable()
-    override val mealsState: MutableLiveData<MealsState> = MutableLiveData()
+    override val mealsState: MutableLiveData<MealState> = MutableLiveData()
     override val addMealDone: MutableLiveData<AddMealState> = MutableLiveData()
 
     private val publishSubject: PublishSubject<String> = PublishSubject.create()
@@ -43,10 +43,10 @@ class MealViewModel(
             }
             .subscribe(
                 {
-                    mealsState.value = MealsState.Success(it)
+                    mealsState.value = MealState.Success(it)
                 },
                 {
-                    mealsState.value = MealsState.Error("Error happened while fetching data from db")
+                    mealsState.value = MealState.Error("Error happened while fetching data from db")
                     Timber.e(it)
                 }
             )
@@ -66,13 +66,13 @@ class MealViewModel(
             .subscribe(
                 {
                     when(it) {
-                        is Resource.Loading -> mealsState.value = MealsState.Loading
-                        is Resource.Success -> mealsState.value = MealsState.DataFetched
-                        is Resource.Error -> mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                        is Resource.Loading -> mealsState.value = MealState.Loading
+                        is Resource.Success -> mealsState.value = MealState.DataFetched
+                        is Resource.Error -> mealsState.value = MealState.Error("Error happened while fetching data from the server")
                     }
                 },
                 {
-                    mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                    mealsState.value = MealState.Error("Error happened while fetching data from the server")
                     Timber.e(it)
                 }
             )
@@ -88,13 +88,13 @@ class MealViewModel(
             .subscribe(
                 {
                     when(it) {
-                        is Resource.Loading -> mealsState.value = MealsState.Loading
-                        is Resource.Success -> mealsState.value = MealsState.DataFetched
-                        is Resource.Error -> mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                        is Resource.Loading -> mealsState.value = MealState.Loading
+                        is Resource.Success -> mealsState.value = MealState.DataFetched
+                        is Resource.Error -> mealsState.value = MealState.Error("Error happened while fetching data from the server")
                     }
                 },
                 {
-                    mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                    mealsState.value = MealState.Error("Error happened while fetching data from the server")
                     Timber.e(it)
                 }
             )
@@ -110,13 +110,35 @@ class MealViewModel(
             .subscribe(
                 {
                     when(it) {
-                        is Resource.Loading -> mealsState.value = MealsState.Loading
-                        is Resource.Success -> mealsState.value = MealsState.DataFetched
-                        is Resource.Error -> mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                        is Resource.Loading -> mealsState.value = MealState.Loading
+                        is Resource.Success -> mealsState.value = MealState.DataFetched
+                        is Resource.Error -> mealsState.value = MealState.Error("Error happened while fetching data from the server")
                     }
                 },
                 {
-                    mealsState.value = MealsState.Error("Error happened while fetching data from the server")
+                    mealsState.value = MealState.Error("Error happened while fetching data from the server")
+                    Timber.e(it)
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
+    override fun fetchMealById(id: String) {
+        val subscription = mealRepository
+            .fetchMealById(id)
+            .startWith(Resource.Loading()) //Kada se pokrene fetch hocemo da postavimo stanje na Loading
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    when(it) {
+                        is Resource.Loading -> mealsState.value = MealState.Loading
+                        is Resource.Success -> mealsState.value = MealState.Success(it.data)
+                        is Resource.Error -> mealsState.value = MealState.Error("Error happened while fetching data from the server")
+                    }
+                },
+                {
+                    mealsState.value = MealState.Error("Error happened while fetching data from the server")
                     Timber.e(it)
                 }
             )

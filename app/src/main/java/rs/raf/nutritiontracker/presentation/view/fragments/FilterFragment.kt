@@ -31,7 +31,6 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
     }
 
     fun init() {
-        println("USLA MALAA")
         binding.viewPager2.adapter = FilterPagerAdapter( parentFragmentManager, requireContext())
         binding.tabLayout.setupWithViewPager(binding.viewPager2)
     }

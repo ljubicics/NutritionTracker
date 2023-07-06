@@ -13,11 +13,9 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.data.models.Category
 import rs.raf.nutritiontracker.databinding.FragmentMealsforcategoryBinding
-import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.contract.MealsForCategoryContract
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.MealForCategoryAdapter
 import rs.raf.nutritiontracker.presentation.view.states.MealsForCategoryState
-import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealsForCategoryViewModel
 import timber.log.Timber
 
@@ -25,7 +23,6 @@ class MealsForCategoryFragment(
     private val category: Category
 ) : Fragment(R.layout.fragment_mealsforcategory){
     private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<MealsForCategoryViewModel>()
-    private val mealViewModel: MealContract.ViewModel by sharedViewModel<MealViewModel>()
 
     private var _binding: FragmentMealsforcategoryBinding? = null
     // This property is only valid between onCreateView and
@@ -59,7 +56,16 @@ class MealsForCategoryFragment(
 
     private fun initRecycler() {
         binding.recyclerViewMealsForCat.layoutManager = LinearLayoutManager(context)
-        adapter = MealForCategoryAdapter()
+        adapter = MealForCategoryAdapter(onItemMoreClicked = {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+            transaction.commit()
+        },
+            listener = {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+                transaction.commit()
+            })
         binding.recyclerViewMealsForCat.adapter = adapter
     }
 

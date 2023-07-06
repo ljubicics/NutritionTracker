@@ -9,6 +9,7 @@ interface MealRepository {
     fun fetchAll(): Observable<Resource<Unit>>
     fun fetchMealsForCategory(category: String): Observable<Resource<Unit>>
     fun fetchMealByName(name: String): Observable<Resource<Unit>>
+    fun fetchMealById(id: String): Observable<Resource<List<Meal>>>
     fun getAll(): Observable<List<Meal>>
     fun getAllByName(name: String): Observable<List<Meal>>
     fun insert(meal: Meal): Completable

@@ -7,7 +7,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import rs.raf.nutritiontracker.modules.areaModule
 import rs.raf.nutritiontracker.modules.categoryModule
 import rs.raf.nutritiontracker.modules.coreModule
 import rs.raf.nutritiontracker.modules.filterMealsByAreaModule
@@ -45,7 +44,6 @@ class NutritionTrackerApplication : Application() {
             filterMealsByCatModule,
             filterMealsByAreaModule,
             filterMealsByIngredientViewModel,
-            areaModule,
             mealsLoadingPageModule,
             listmealsModule
         )
