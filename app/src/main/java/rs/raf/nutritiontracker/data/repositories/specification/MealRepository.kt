@@ -13,6 +13,6 @@ interface MealRepository {
     fun fetchMealByName(name: String): Observable<Resource<Unit>>
     fun fetchMealById(id: String): Observable<Resource<List<Meal>>>
     fun getAll(): Observable<List<Meal>>
-    fun getAllByName(name: String): Observable<List<Meal>>
+    fun getAllByUser(name: String): Observable<List<MealSavedEntity>>
     fun insert(meal: MealSavedEntity): Completable
 }

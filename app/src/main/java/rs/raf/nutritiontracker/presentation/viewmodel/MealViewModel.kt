@@ -15,6 +15,7 @@ import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.view.states.AddMealState
 import rs.raf.nutritiontracker.presentation.view.states.MealState
+import rs.raf.nutritiontracker.presentation.view.states.SavedMealState
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -23,37 +24,38 @@ class MealViewModel(
 ) : ViewModel(), MealContract.ViewModel {
     private val subscriptions = CompositeDisposable()
     override val mealsState: MutableLiveData<MealState> = MutableLiveData()
+    override val savedMealState: MutableLiveData<SavedMealState> = MutableLiveData()
     override val addMealDone: MutableLiveData<AddMealState> = MutableLiveData()
 
     private val publishSubject: PublishSubject<String> = PublishSubject.create()
 
 
-    init {
-        // TODO: Namestiti da odmah povlaci iz kategorija sva jela
-        val subscription = publishSubject
-            .debounce(200, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged()
-            .switchMap {
-                mealRepository
-                    .getAllByName(it)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnError {
-                        Timber.e("Error in publish subject")
-                        Timber.e(it)
-                    }
-            }
-            .subscribe(
-                {
-                    mealsState.value = MealState.Success(it)
-                },
-                {
-                    mealsState.value = MealState.Error("Error happened while fetching data from db")
-                    Timber.e(it)
-                }
-            )
-        subscriptions.add(subscription)
-    }
+//    init {
+//        // TODO: Namestiti da odmah povlaci iz kategorija sva jela
+//        val subscription = publishSubject
+//            .debounce(200, TimeUnit.MILLISECONDS)
+//            .distinctUntilChanged()
+//            .switchMap {
+//                mealRepository
+//                    .getAllByName(it)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .doOnError {
+//                        Timber.e("Error in publish subject")
+//                        Timber.e(it)
+//                    }
+//            }
+//            .subscribe(
+//                {
+//                    mealsState.value = MealState.Success(it)
+//                },
+//                {
+//                    mealsState.value = MealState.Error("Error happened while fetching data from db")
+//                    Timber.e(it)
+//                }
+//            )
+//        subscriptions.add(subscription)
+//    }
 
     @SuppressLint("CheckResult")
     override fun fetchAllMeals() {
@@ -155,6 +157,21 @@ class MealViewModel(
         TODO("Not yet implemented")
     }
 
+    override fun getSavedMealsByUser(username: String) {
+        val subscription = mealRepository
+            .getAllByUser(username)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Timber.e("Meal inserted")
+                    savedMealState.value = SavedMealState.Success(it)
+                },
+                {
+                    Timber.e("error inserting meal")
+                }
+            )
+        subscriptions.add(subscription)
+    }
 
     override fun addMeal(meal: MealSavedEntity) {
         val subscription = mealRepository

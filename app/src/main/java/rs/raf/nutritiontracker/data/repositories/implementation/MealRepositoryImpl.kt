@@ -240,8 +240,8 @@ class MealRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun getAllByName(name: String): Observable<List<Meal>> {
-        TODO("Not yet implemented")
+    override fun getAllByUser(name: String): Observable<List<MealSavedEntity>> {
+        return localMealSavedDataSource.getByUser(name)
     }
 
     override fun insert(meal: MealSavedEntity): Completable {

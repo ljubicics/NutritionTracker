@@ -9,25 +9,31 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
+import rs.raf.nutritiontracker.data.models.User
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
+import rs.raf.nutritiontracker.databinding.FragmentProfileBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
+import rs.raf.nutritiontracker.presentation.contract.UserContract
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
+import rs.raf.nutritiontracker.presentation.view.states.UserState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.UserViewModel
 import timber.log.Timber
 
-class ProfileFragment : Fragment(R.layout.fragment_categories) {private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
-
-    private var _binding: FragmentCategoriesBinding? = null
+class ProfileFragment : Fragment(R.layout.fragment_profile) {
+    private var _binding: FragmentProfileBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val userViewModel: UserContract.ViewModel by sharedViewModel<UserViewModel>()
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,67 +43,48 @@ class ProfileFragment : Fragment(R.layout.fragment_categories) {private val cate
     }
 
     private fun init() {
-//        initUi()
-//        initObservers()
+        val userState = userViewModel.userState.value
+        if (userState != null) {
+            getUser(userState)
+        }
+        initUi()
     }
 
     private fun initUi() {
 //        initRecycler()
-//        initListeners()
-    }
-
-    private fun initRecycler() {
-//        binding.listRv.layoutManager = LinearLayoutManager(context)
-//        adapter = MovieAdapter()
-//        binding.listRv.adapter = adapter
+        initListeners()
     }
 
     private fun initListeners() {
-//        binding.inputEt.doAfterTextChanged {
-//            val filter = it.toString()
-//            mainViewModel.getMoviesByName(filter)
-//        }
-    }
-
-    private fun initObservers() {
-        categoryViewModel.categoriesState.observe(viewLifecycleOwner, Observer {
-            Timber.e(it.toString())
-            renderState(it)
-        })
-        // Pravimo subscription kad observablu koji je vezan za getAll iz baze
-        // Na svaku promenu tabele, obserrvable ce emitovati na onNext sve elemente
-        // koji zadovoljavaju query
-        categoryViewModel.getAllCategories()
-        // Pokrecemo operaciju dovlacenja podataka sa servera, kada podaci stignu,
-        // bice sacuvani u bazi, tada ce se triggerovati observable na koji smo se pretplatili
-        // preko metode getAllMovies()
-//        categoryViewModel.fetchAllCategories()
-    }
-
-    private fun renderState(state: CategoriesState) {
-        when (state) {
-            is CategoriesState.Success -> {
-                showLoadingState(false)
-//                adapter.submitList(state.categories)
-            }
-            is CategoriesState.Error -> {
-                showLoadingState(false)
-                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-            }
-            is CategoriesState.DataFetched -> {
-                showLoadingState(false)
-                Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
-            }
-            is CategoriesState.Loading -> {
-                showLoadingState(true)
-            }
+        binding.savedMealsButton.setOnClickListener {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, UserSavedMealsFragment(user.username)).addToBackStack(null)
+            transaction.commit()
         }
     }
 
-    private fun showLoadingState(loading: Boolean) {
-//        binding.inputEt.isVisible = !loading
-//        binding.listRv.isVisible = !loading
-//        binding.loadingPb.isVisible = loading
+    private fun initObservers() {
+
+    }
+
+    private fun getUser(state: UserState) {
+        when (state) {
+            is UserState.Success -> {
+//                showLoadingState(false)
+                user = state.users[0]
+            }
+            is UserState.Error -> {
+//                showLoadingState(false)
+                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+            }
+            is UserState.DataFetched -> {
+//                showLoadingState(false)
+                Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
+            }
+            is UserState.Loading -> {
+//                showLoadingState(true)
+            }
+        }
     }
 
     override fun onDestroyView() {

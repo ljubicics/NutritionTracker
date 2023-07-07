@@ -143,7 +143,6 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
         when (state) {
             is MealsForAreaState.Success -> {
                 showLoadingState(false)
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS SUCCSS")
                 listOfMealsByArea = state.mealsForCategory.map {
                     ShortMeal(
                         it.strMeal,
@@ -155,16 +154,13 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
             }
             is MealsForAreaState.Error -> {
                 showLoadingState(false)
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS ERROR")
                 Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
             }
             is MealsForAreaState.DataFetched -> {
                 showLoadingState(false)
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS DATA FETCHED")
                 Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
             }
             is MealsForAreaState.Loading -> {
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS LOADING")
                 showLoadingState(true)
             }
         }
@@ -173,7 +169,6 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
     private fun renderStateArea(state: AreaState) {
         when (state) {
             is AreaState.Success -> {
-                println("AAAAAAAAAAAAAAAAA")
                 showLoadingState(false)
                 val spinner = binding.spinner2
                 val areas = state.areas // Dobijanje liste kategorija iz stanja
@@ -193,7 +188,6 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
                 Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
             }
             is AreaState.Loading -> {
-                println("AAAAAAAAAAAAAAAAAA")
                 showLoadingState(true)
             }
         }

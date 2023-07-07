@@ -10,15 +10,16 @@ import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.FragmentCategoriesBinding
+import rs.raf.nutritiontracker.databinding.FragmentPlanBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.view.states.CategoriesState
 import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import timber.log.Timber
 
-class PlanFragment : Fragment(R.layout.fragment_categories) {
+class PlanFragment : Fragment(R.layout.fragment_plan) {
     private val categoryViewModel: CategoryContract.ViewModel by sharedViewModel<CategoryViewModel>()
 
-    private var _binding: FragmentCategoriesBinding? = null
+    private var _binding: FragmentPlanBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -28,7 +29,7 @@ class PlanFragment : Fragment(R.layout.fragment_categories) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCategoriesBinding.inflate(inflater, container, false)
+        _binding = FragmentPlanBinding.inflate(inflater, container, false)
         return binding.root
     }
 
