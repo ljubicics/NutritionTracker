@@ -12,9 +12,10 @@ val mealModule = module {
 
     viewModel { MealViewModel(mealRepository = get()) }
 
-    single<MealRepository> { MealRepositoryImpl(localMealDataSource = get(), localCategoryDataSource = get(), remoteDataSource = get(), mealsForCategoryRepository = get()) }
+    single<MealRepository> { MealRepositoryImpl(localMealDataSource = get(),localMealSavedDataSource = get(), localCategoryDataSource = get(), remoteDataSource = get(), mealsForCategoryRepository = get()) }
 
     single { get<MealDataBase>().getMealDao() }
+    single { get<MealDataBase>().getMealSavedDao() }
 
     single<MealService> { create(retrofit = get()) }
 

@@ -3,8 +3,8 @@ package rs.raf.nutritiontracker.data.models.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "meals")
-data class MealEntity(
+@Entity(tableName = "savedMeals")
+data class MealSavedEntity(
     @PrimaryKey(autoGenerate = true)
     val mealId: Long,
     val idMeal: String,
@@ -60,4 +60,6 @@ data class MealEntity(
     val strImageSource: String?,
     val strCreativeCommonsConfirmed: String?,
     val dateModified: String?,
+    val user: String,
+    val mealType: String
 )

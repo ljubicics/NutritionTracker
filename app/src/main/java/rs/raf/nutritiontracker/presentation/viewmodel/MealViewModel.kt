@@ -9,6 +9,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.Resource
+import rs.raf.nutritiontracker.data.models.entities.MealEntity
+import rs.raf.nutritiontracker.data.models.entities.MealSavedEntity
 import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.presentation.contract.MealContract
 import rs.raf.nutritiontracker.presentation.view.states.AddMealState
@@ -153,8 +155,22 @@ class MealViewModel(
         TODO("Not yet implemented")
     }
 
-    override fun addMeal(meal: Meal) {
-        TODO("Not yet implemented")
+
+    override fun addMeal(meal: MealSavedEntity) {
+        val subscription = mealRepository
+            .insert(meal)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Timber.e("Meal inserted")
+                    addMealDone.value = AddMealState.Success
+                },
+                {
+                    Timber.e("error inserting meal")
+                }
+            )
+        subscriptions.add(subscription)
     }
 
     override fun onCleared() {

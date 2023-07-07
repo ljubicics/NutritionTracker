@@ -145,4 +145,9 @@ class FilterByIngredientFragment : Fragment(R.layout.fragment_filter_ingredient)
         binding.toggleButtonIngredient.isVisible = !loading
         binding.progressBarIngredient.isVisible = loading
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

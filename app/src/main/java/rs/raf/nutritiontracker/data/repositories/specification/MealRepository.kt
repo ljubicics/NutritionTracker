@@ -4,6 +4,8 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.Resource
+import rs.raf.nutritiontracker.data.models.entities.MealEntity
+import rs.raf.nutritiontracker.data.models.entities.MealSavedEntity
 
 interface MealRepository {
     fun fetchAll(): Observable<Resource<Unit>>
@@ -12,5 +14,5 @@ interface MealRepository {
     fun fetchMealById(id: String): Observable<Resource<List<Meal>>>
     fun getAll(): Observable<List<Meal>>
     fun getAllByName(name: String): Observable<List<Meal>>
-    fun insert(meal: Meal): Completable
+    fun insert(meal: MealSavedEntity): Completable
 }

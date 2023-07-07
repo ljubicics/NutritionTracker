@@ -67,6 +67,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             val user = it.users.get(0)
                             if(user.password.equals(password) && user.password.length > 4) {
                                 sharedPreferences.edit().putString("USER", moshi.adapter(User::class.java).toJson(user)).apply()
+
                             } else {
                                 Toast.makeText(context, "Lozinka nije dobra", Toast.LENGTH_SHORT).show()
                                 return@Observer

@@ -5,9 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import rs.raf.nutritiontracker.R
+import rs.raf.nutritiontracker.data.models.User
+import rs.raf.nutritiontracker.data.models.entities.UserEntity
 import rs.raf.nutritiontracker.databinding.ActivityMainFragmentBinding
 import rs.raf.nutritiontracker.presentation.contract.CategoryContract
 import rs.raf.nutritiontracker.presentation.contract.MealContract
@@ -33,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private val mealsForCategoryViewModel: MealsForCategoryContract.ViewModel by viewModel<MealsForCategoryViewModel>()
     private val filterMealsByAreaViewModel: MealsForAreaContract.ViewModel by viewModel<FilterMealsByAreaViewModel>()
     private val sharedPreferences: SharedPreferences by inject()
+    private val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,13 +70,12 @@ class MainActivity : AppCompatActivity() {
 //            )
 //        binding.tabLayout.setupWithViewPager(binding.viewPager)
 
-//        val user = UserEntity(
-//            userId = 0,
-//            username = "strahinja",
-//            password = "strahinja",
-//            email = "strahinja.ljubicic@gmail.com"
-//        )
-//        userViewModel.insertUser(user)
+        val user = UserEntity(
+            username = "strahinja",
+            password = "strahinja",
+            email = "strahinja.ljubicic@gmail.com"
+        )
+        userViewModel.insertUser(user)
     }
 
     private fun initObservers() {
@@ -90,6 +94,10 @@ class MainActivity : AppCompatActivity() {
         splashScreen.setKeepVisibleCondition{
             try{
                 val userString = sharedPreferences.getString("USER", null)
+                val user = moshi.adapter(User::class.java).fromJson(userString)
+                if (user != null) {
+                    userViewModel.getUserByUsername(user.username)
+                }
 //                val userString : String? = null
                 if (userString != null) {
                     // Ukoliko user postoji, postavite fragment za rad sa aplikacijom

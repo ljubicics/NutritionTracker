@@ -24,6 +24,7 @@ import rs.raf.nutritiontracker.presentation.view.states.MealState
 import rs.raf.nutritiontracker.presentation.view.states.MealsForAreaState
 import rs.raf.nutritiontracker.presentation.viewmodel.FilterMealsByAreaViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
+import rs.raf.nutrmealiontracker.presentation.view.fragments.SaveMealFragment
 
 class MealDetailedFragment(
     private val shortMeal: ShortMeal?,
@@ -33,6 +34,7 @@ class MealDetailedFragment(
     private var _binding: FragmentMealDetailedBinding? = null
     private val mealViewModel: MealContract.ViewModel by sharedViewModel<MealViewModel>()
     private var ingredientMeasure: HashMap<String, String> = hashMapOf()
+    private lateinit var meal: Meal
 //    mealNameTV: TextView
 //    mealsCategoryTV: TextView
 //    mealsAreaTV: TextView
@@ -89,7 +91,11 @@ class MealDetailedFragment(
     }
 
     private fun initListeners() {
-
+        binding.saveMealButton.setOnClickListener {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, SaveMealFragment(meal)).addToBackStack(null)
+            transaction.commit()
+        }
     }
 
     private fun renderStateMeal(state: MealState) {
@@ -97,7 +103,7 @@ class MealDetailedFragment(
             is MealState.Success -> {
 //                showLoadingState(false)
                 fillpage(state.meals[0])
-
+                meal = state.meals[0]
             }
             is MealState.Error -> {
 //                showLoadingState(false)

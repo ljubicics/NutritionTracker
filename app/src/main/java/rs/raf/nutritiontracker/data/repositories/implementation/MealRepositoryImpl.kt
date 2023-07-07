@@ -5,17 +5,20 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import rs.raf.nutritiontracker.data.datasources.local.CategoryDao
 import rs.raf.nutritiontracker.data.datasources.local.MealDao
+import rs.raf.nutritiontracker.data.datasources.local.MealSavedDao
 import rs.raf.nutritiontracker.data.datasources.remote.MealService
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.entities.MealEntity
 import rs.raf.nutritiontracker.data.models.MealForCategory
 import rs.raf.nutritiontracker.data.models.response.MealResponse
 import rs.raf.nutritiontracker.data.models.Resource
+import rs.raf.nutritiontracker.data.models.entities.MealSavedEntity
 import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.data.repositories.specification.MealsForCategoryRepository
 
 class MealRepositoryImpl(
     private val localMealDataSource: MealDao,
+    private val localMealSavedDataSource: MealSavedDao,
     private val localCategoryDataSource: CategoryDao,
     private val remoteDataSource: MealService,
     private val mealsForCategoryRepository: MealsForCategoryRepository
@@ -241,7 +244,7 @@ class MealRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun insert(meal: Meal): Completable {
-        TODO("Not yet implemented")
+    override fun insert(meal: MealSavedEntity): Completable {
+        return localMealSavedDataSource.insert(meal)
     }
 }
