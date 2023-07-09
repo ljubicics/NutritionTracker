@@ -35,14 +35,6 @@ class MealDetailedFragment(
     private val mealViewModel: MealContract.ViewModel by sharedViewModel<MealViewModel>()
     private var ingredientMeasure: HashMap<String, String> = hashMapOf()
     private lateinit var meal: Meal
-//    mealNameTV: TextView
-//    mealsCategoryTV: TextView
-//    mealsAreaTV: TextView
-//    mealsTagsTV: TextView
-//    mealsLinkTV: TextView
-//    mealInstructionsTV: TextView
-//    mealRecyclerView: RecyclerView
-//    mealImageView: ImageView
     private lateinit var strMeal: String
     private lateinit var strMealThumb: String
     private lateinit var idMeal: String

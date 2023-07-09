@@ -67,13 +67,11 @@ class MainFragment : Fragment(R.layout.bottom_navigation) {
                     binding.viewPager.setCurrentItem(PagerAdapter.FRAGMENT_5, false)
                 }
             }
+            binding.viewPager.adapter?.notifyDataSetChanged()
                 true
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

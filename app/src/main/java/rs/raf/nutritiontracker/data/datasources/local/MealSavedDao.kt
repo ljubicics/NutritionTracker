@@ -16,4 +16,7 @@ abstract class MealSavedDao {
 
     @Query("SELECT * FROM savedMeals WHERE user LIKE :name || '%'")
     abstract fun getByUser(name: String): Observable<List<MealSavedEntity>>
+
+    @Query("DELETE FROM savedMeals WHERE mealId = :id")
+    abstract fun deleteById(id: Long): Completable
 }

@@ -61,5 +61,6 @@ data class MealSavedEntity(
     val strCreativeCommonsConfirmed: String?,
     val dateModified: String?,
     val user: String,
-    val mealType: String
+    val mealType: String,
+    val dateInMillis: Long
 )

@@ -19,6 +19,8 @@ import rs.raf.nutritiontracker.presentation.view.recycler.adapter.ShortMealAdapt
 import rs.raf.nutritiontracker.presentation.view.states.MealsForAreaState
 import rs.raf.nutritiontracker.presentation.view.states.SavedMealState
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
+import rs.raf.nutrmealiontracker.presentation.view.fragments.SaveMealFragment
+import timber.log.Timber
 
 class UserSavedMealsFragment(
     private val username: String
@@ -51,11 +53,16 @@ class UserSavedMealsFragment(
 
     private fun initRecycler() {
         adapter = SavedMealAdapter(onItemDeleteClicked = {
-
+            mealViewModel.deleteMealById(it.mealId)
+            Timber.e("ID " + it.mealId)
         }, onItemEditClicked = {
-
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, EditSavedMealFragment(it)).addToBackStack(null)
+            transaction.commit()
         }, listener = {
-
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.add(R.id.mainFragmentFcv, AboutSavedMealFragment(it)).addToBackStack(null)
+            transaction.commit()
         })
         binding.userSavedMealsRecyclerView.adapter = adapter
         binding.userSavedMealsRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -129,7 +136,8 @@ class UserSavedMealsFragment(
                         it.strCreativeCommonsConfirmed,
                         it.dateModified,
                         it.user,
-                        it.mealType
+                        it.mealType,
+                        it.dateInMillis
                     )
                 }
                 adapter.submitList(listOfSavedMeals)

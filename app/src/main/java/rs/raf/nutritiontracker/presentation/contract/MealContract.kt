@@ -20,8 +20,9 @@ interface MealContract {
         fun fetchMealById(id: String)
         fun getAllMeals()
         fun getMealsByName(name: String)
-
+        fun deleteMealById(id: Long)
         fun getSavedMealsByUser(username: String)
         fun addMeal(meal: MealSavedEntity)
+        fun editMeal(meal: MealSavedEntity)
     }
 }

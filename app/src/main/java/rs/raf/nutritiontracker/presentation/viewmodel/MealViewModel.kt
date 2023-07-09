@@ -157,9 +157,27 @@ class MealViewModel(
         TODO("Not yet implemented")
     }
 
+    override fun deleteMealById(id: Long) {
+        val subscription = mealRepository
+            .deleteMealById(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+//                    deleteMealFromList(id)
+                    Timber.e("Meal deleted")
+                },
+                {
+                    Timber.e("error deleting meal")
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
     override fun getSavedMealsByUser(username: String) {
         val subscription = mealRepository
             .getAllByUser(username)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
@@ -188,6 +206,31 @@ class MealViewModel(
                 }
             )
         subscriptions.add(subscription)
+    }
+
+    override fun editMeal(meal: MealSavedEntity) {
+        val subscription = mealRepository
+            .editMeal(meal)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Timber.e("Meal inserted")
+                    addMealDone.value = AddMealState.Success
+                },
+                {
+                    Timber.e("error inserting meal")
+                }
+            )
+        subscriptions.add(subscription)
+    }
+
+    private fun deleteMealFromList(id: Long) {
+        if(savedMealState.value is SavedMealState.Success) {
+            val list = (savedMealState.value as SavedMealState.Success).savedMeals.toMutableList()
+            list.removeIf { it.mealId == id }
+            savedMealState.value = SavedMealState.Success(list)
+        }
     }
 
     override fun onCleared() {

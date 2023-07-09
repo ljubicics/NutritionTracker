@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         splashScreen.setKeepVisibleCondition{
             try{
                 val userString = sharedPreferences.getString("USER", null)
-                val user = moshi.adapter(User::class.java).fromJson(userString)
+                val user = userString?.let { moshi.adapter(User::class.java).fromJson(it) }
                 if (user != null) {
                     userViewModel.getUserByUsername(user.username)
                 }

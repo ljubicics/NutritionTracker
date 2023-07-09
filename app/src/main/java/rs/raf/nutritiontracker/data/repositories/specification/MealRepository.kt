@@ -14,5 +14,7 @@ interface MealRepository {
     fun fetchMealById(id: String): Observable<Resource<List<Meal>>>
     fun getAll(): Observable<List<Meal>>
     fun getAllByUser(name: String): Observable<List<MealSavedEntity>>
+    fun deleteMealById(id: Long): Completable
     fun insert(meal: MealSavedEntity): Completable
+    fun editMeal(meal: MealSavedEntity): Completable
 }

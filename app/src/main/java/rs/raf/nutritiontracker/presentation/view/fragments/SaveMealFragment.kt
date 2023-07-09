@@ -49,6 +49,7 @@ class SaveMealFragment(
     private var mealDateSelected: String = ""
     private lateinit var user: User
     private lateinit var spinnerSelected: String
+    private var date: Long = 0
     private lateinit var image: String
 
     override fun onCreateView(
@@ -110,14 +111,18 @@ class SaveMealFragment(
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(cameraIntent, 1888)
         })
-        binding.saveMealDateButton.setText("" + day + " " + month + " " + year)
+        binding.saveMealDateButton.setText("" + calendar.get(Calendar.DAY_OF_MONTH) + " " + (calendar.get(Calendar.MONTH) + 1) + " " + calendar.get(Calendar.YEAR))
         binding.saveMealDateButton.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year2, monthOfYear, dayOfMonth ->
                 // Display Selected date in textbox
                 year = year2
                 month = monthOfYear
                 day = dayOfMonth
-                binding.saveMealDateButton.setText("" + dayOfMonth + " " + monthOfYear + " " + year2)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.YEAR, year)
+                date = calendar.timeInMillis
+                binding.saveMealDateButton.setText("" + calendar.get(Calendar.DAY_OF_MONTH) + " " + (calendar.get(Calendar.MONTH) + 1) + " " + calendar.get(Calendar.YEAR))
             }, year, month, day)
             dpd.show()
         }
@@ -179,7 +184,8 @@ class SaveMealFragment(
                 meal.strCreativeCommonsConfirmed,
                 mealDateSelected,
                 user.username,
-                spinner.selectedItem.toString()
+                spinner.selectedItem.toString(),
+                date
             )
             mealViewModel.addMeal(mealForDB)
         }

@@ -236,6 +236,10 @@ class MealRepositoryImpl(
             }
     }
 
+    override fun deleteMealById(id: Long): Completable {
+        return localMealSavedDataSource.deleteById(id)
+    }
+
     override fun getAll(): Observable<List<Meal>> {
         TODO("Not yet implemented")
     }
@@ -246,5 +250,10 @@ class MealRepositoryImpl(
 
     override fun insert(meal: MealSavedEntity): Completable {
         return localMealSavedDataSource.insert(meal)
+    }
+
+    override fun editMeal(meal: MealSavedEntity): Completable {
+            localMealSavedDataSource.deleteById(meal.mealId)
+            return localMealSavedDataSource.insert(meal)
     }
 }

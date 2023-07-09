@@ -48,6 +48,7 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        println("ON VIEW CREATED FRAGMENT")
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         init()
@@ -180,6 +181,17 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
         binding.spinner.isVisible = !loading
         binding.filterCategoryFragmentET.isVisible = !loading
         binding.progressBar3.isVisible = loading
+    }
+
+    override fun onPause() {
+        super.onPause()
+        println("PAUZICA IZ KATEGORIJE")
+        onDestroyView()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
