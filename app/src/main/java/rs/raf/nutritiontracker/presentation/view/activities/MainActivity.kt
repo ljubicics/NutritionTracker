@@ -102,12 +102,12 @@ class MainActivity : AppCompatActivity() {
                 if (userString != null) {
                     // Ukoliko user postoji, postavite fragment za rad sa aplikacijom
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.mainFragmentFcv, MainFragment())
+                    transaction.replace(R.id.container, MainFragment())
                     transaction.commit()
                 } else {
                     // Ukoliko user ne postoji, postavite LoginFragment
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.mainFragmentFcv, LoginFragment())
+                    transaction.replace(R.id.container, LoginFragment())
                     transaction.commit()
                 }
             } catch (e : Exception) {

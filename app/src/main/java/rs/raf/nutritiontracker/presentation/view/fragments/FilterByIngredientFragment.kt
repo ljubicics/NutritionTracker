@@ -54,13 +54,13 @@ class FilterByIngredientFragment : Fragment(R.layout.fragment_filter_ingredient)
 
     private fun initRecycler() {
         adapter = ShortMealAdapter(onItemMoreClicked = {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.add(R.id.container, MealDetailedFragment(it, null)).addToBackStack(null)
             transaction.commit()
         },
             listener = {
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.add(R.id.container, MealDetailedFragment(it, null)).addToBackStack(null)
                 transaction.commit()
             })
         binding.filterIngredientRecycler.adapter = adapter

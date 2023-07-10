@@ -14,11 +14,14 @@ import rs.raf.nutritiontracker.data.models.SavedMeal
 import rs.raf.nutritiontracker.data.models.ShortMeal
 import rs.raf.nutritiontracker.databinding.FragmentUserMealsBinding
 import rs.raf.nutritiontracker.presentation.contract.MealContract
+import rs.raf.nutritiontracker.presentation.contract.UserContract
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.SavedMealAdapter
 import rs.raf.nutritiontracker.presentation.view.recycler.adapter.ShortMealAdapter
 import rs.raf.nutritiontracker.presentation.view.states.MealsForAreaState
 import rs.raf.nutritiontracker.presentation.view.states.SavedMealState
+import rs.raf.nutritiontracker.presentation.view.states.UserState
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
+import rs.raf.nutritiontracker.presentation.viewmodel.UserViewModel
 import rs.raf.nutrmealiontracker.presentation.view.fragments.SaveMealFragment
 import timber.log.Timber
 
@@ -54,14 +57,15 @@ class UserSavedMealsFragment(
     private fun initRecycler() {
         adapter = SavedMealAdapter(onItemDeleteClicked = {
             mealViewModel.deleteMealById(it.mealId)
+            mealViewModel.getSavedMealsByUser(username)
             Timber.e("ID " + it.mealId)
         }, onItemEditClicked = {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, EditSavedMealFragment(it)).addToBackStack(null)
+            transaction.add(R.id.container, EditSavedMealFragment(it)).addToBackStack(null)
             transaction.commit()
         }, listener = {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, AboutSavedMealFragment(it)).addToBackStack(null)
+            transaction.add(R.id.container, AboutSavedMealFragment(it)).addToBackStack(null)
             transaction.commit()
         })
         binding.userSavedMealsRecyclerView.adapter = adapter

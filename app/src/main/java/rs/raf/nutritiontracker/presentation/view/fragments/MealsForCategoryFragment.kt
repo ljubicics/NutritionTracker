@@ -58,12 +58,12 @@ class MealsForCategoryFragment(
         binding.recyclerViewMealsForCat.layoutManager = LinearLayoutManager(context)
         adapter = MealForCategoryAdapter(onItemMoreClicked = {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+            transaction.add(R.id.container, MealDetailedFragment(null, it)).addToBackStack(null)
             transaction.commit()
         },
             listener = {
                 val transaction = parentFragmentManager.beginTransaction()
-                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(null, it)).addToBackStack(null)
+                transaction.add(R.id.container, MealDetailedFragment(null, it)).addToBackStack(null)
                 transaction.commit()
             })
         binding.recyclerViewMealsForCat.adapter = adapter

@@ -14,7 +14,7 @@ import rs.raf.nutritiontracker.data.models.entities.UserEntity
     entities = [MealEntity::class, CategoryEntity::class,
         MealForCategoryEntity::class, UserEntity::class,
                AreaEntity::class, MealSavedEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false)
 @TypeConverters()
 abstract class MealDataBase : RoomDatabase() {

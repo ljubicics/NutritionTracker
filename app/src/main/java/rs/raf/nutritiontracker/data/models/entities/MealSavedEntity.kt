@@ -62,5 +62,6 @@ data class MealSavedEntity(
     val dateModified: String?,
     val user: String,
     val mealType: String,
-    val dateInMillis: Long
+    val dateInMillis: Long,
+    val dateAdded: Long
 )

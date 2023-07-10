@@ -103,9 +103,11 @@ class SaveMealFragment(
 
     private fun inmealListeners() {
         val calendar = Calendar.getInstance()
+        val today = calendar.timeInMillis
         var year = calendar.get(Calendar.YEAR)
         var month = calendar.get(Calendar.MONTH)
         var day = calendar.get(Calendar.DAY_OF_MONTH)
+        date = calendar.timeInMillis
 
         binding.saveMealImageView.setOnClickListener(View.OnClickListener {
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -185,9 +187,12 @@ class SaveMealFragment(
                 mealDateSelected,
                 user.username,
                 spinner.selectedItem.toString(),
-                date
+                date,
+                today
             )
             mealViewModel.addMeal(mealForDB)
+            requireActivity().supportFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
         }
     }
 

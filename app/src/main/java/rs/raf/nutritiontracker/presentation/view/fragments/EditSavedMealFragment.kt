@@ -60,6 +60,7 @@ class EditSavedMealFragment(
 
     private fun initListeners() {
         val calendar = Calendar.getInstance()
+        val today = calendar.timeInMillis
         var year = calendar.get(Calendar.YEAR)
         var month = calendar.get(Calendar.MONTH)
         var day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -135,7 +136,8 @@ class EditSavedMealFragment(
                 binding.editSavedMealDateTV.text.toString(),
                 savedMeal.user,
                 savedMeal.mealType,
-                date
+                date,
+                today,
             )
             mealViewModel.editMeal(mealForDB)
         }

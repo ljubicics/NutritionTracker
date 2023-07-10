@@ -12,6 +12,9 @@ import rs.raf.nutritiontracker.data.models.SavedMeal
 import rs.raf.nutritiontracker.databinding.FragmentAboutSavedMealBinding
 import rs.raf.nutritiontracker.databinding.FragmentMealDetailedBinding
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class AboutSavedMealFragment(
     private val savedMeal: SavedMeal
@@ -66,7 +69,11 @@ class AboutSavedMealFragment(
         binding.aboutSavedMealAreaTV.text = meal.strArea
         binding.aboutSavedMealsTagsTV.text = meal.strTags
         binding.aboutSavedMealLinkTV.text = meal.strYoutube
-        binding.aboutSavedMealDateTV.text = meal.dateModified
+        val cal : Calendar = Calendar.getInstance()
+        cal.timeInMillis = meal.dateInMillis
+        val dateFormat = SimpleDateFormat("dd MM yyyy", Locale.getDefault())
+        val formattedTime = dateFormat.format(cal.time)
+        binding.aboutSavedMealDateTV.text = formattedTime
         binding.aboutSavedMealTypeTV.text = meal.mealType
         binding.aboutSavedMealInstructionsTV.text = meal.strInstructions
         for(i in 1..20) {

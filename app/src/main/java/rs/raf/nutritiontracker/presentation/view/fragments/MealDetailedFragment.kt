@@ -25,6 +25,7 @@ import rs.raf.nutritiontracker.presentation.view.states.MealsForAreaState
 import rs.raf.nutritiontracker.presentation.viewmodel.FilterMealsByAreaViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 import rs.raf.nutrmealiontracker.presentation.view.fragments.SaveMealFragment
+import timber.log.Timber
 
 class MealDetailedFragment(
     private val shortMeal: ShortMeal?,
@@ -41,7 +42,6 @@ class MealDetailedFragment(
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,7 +85,7 @@ class MealDetailedFragment(
     private fun initListeners() {
         binding.saveMealButton.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, SaveMealFragment(meal)).addToBackStack(null)
+            transaction.add(R.id.container, SaveMealFragment(meal)).addToBackStack(null)
             transaction.commit()
         }
     }

@@ -28,6 +28,7 @@ import rs.raf.nutritiontracker.presentation.viewmodel.CategoryViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.MealViewModel
 import rs.raf.nutritiontracker.presentation.viewmodel.UserViewModel
 import timber.log.Timber
+import java.util.Calendar
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var _binding: FragmentProfileBinding? = null
@@ -82,7 +83,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun initListeners() {
         binding.savedMealsButton.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, UserSavedMealsFragment(user.username)).addToBackStack(null)
+            transaction.add(R.id.container, UserSavedMealsFragment(user.username)).addToBackStack(null)
             transaction.commit()
         }
     }
@@ -150,19 +151,62 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun getBarChartData() {
         barEntriesList = ArrayList()
 
-        for(meal in savedMeals) {
+        var firstDay : Float = 0.0F
+        var secondDay : Float = 0.0F
+        var thirdDay : Float = 0.0F
+        var fourthDay : Float = 0.0F
+        var fifthDay : Float = 0.0F
+        var sixthDay : Float = 0.0F
+        var seventhDay : Float = 0.0F
 
+        val calendar = Calendar.getInstance()
+        val currentDateInMillis = calendar.timeInMillis
+
+        val mealsPerDay = IntArray(7) // Mapa za čuvanje broja jela po danima
+
+        mealsPerDay.fill(0)
+//
+        for (meal in savedMeals) {
+            val mealDateInMillis = meal.dateAdded // Vreme jela u milisekundama
+//            Timber.e("VREMEEE " + (currentDateInMillis - mealDateInMillis))
+//            // Računanje broja dana koji je prošao od datuma jela do trenutnog datuma
+            val daysAgo = ((currentDateInMillis - mealDateInMillis) / (24 * 60 * 60 * 1000)).toInt() // Pretvaranje u dane
+//
+//            Timber.e("BROJ DANA JELA " + daysAgo)
+//
+            if(daysAgo <= 6) {
+                mealsPerDay[daysAgo] = mealsPerDay[daysAgo] + 1
+            }
         }
+//
+//        for(i in 0..mealsPerDay.size) {
+//            Timber.e("Dan ima ovoliko jela: " + mealsPerDay[i])
+//        }
 
-        // on below line we are adding data
-        // to our bar entries list
-        barEntriesList.add(BarEntry(1f, 1f))
-        barEntriesList.add(BarEntry(2f, 2f))
-        barEntriesList.add(BarEntry(3f, 3f))
-        barEntriesList.add(BarEntry(4f, 4f))
-        barEntriesList.add(BarEntry(5f, 5f))
-        barEntriesList.add(BarEntry(6f, 5f))
-        barEntriesList.add(BarEntry(7f, 5f))
+        firstDay = mealsPerDay[0].toFloat()
+        secondDay = mealsPerDay[1].toFloat()
+        thirdDay = mealsPerDay[2].toFloat()
+        fourthDay = mealsPerDay[3].toFloat()
+        fifthDay = mealsPerDay[4].toFloat()
+        sixthDay = mealsPerDay[5].toFloat()
+        seventhDay = mealsPerDay[6].toFloat()
+
+        println(firstDay)
+        println(secondDay)
+        println(thirdDay)
+        println(fourthDay)
+        println(fifthDay)
+        println(sixthDay)
+        println(seventhDay)
+
+
+        barEntriesList.add(BarEntry(0f, firstDay))
+        barEntriesList.add(BarEntry(1f, secondDay))
+        barEntriesList.add(BarEntry(2f, thirdDay))
+        barEntriesList.add(BarEntry(3f, fourthDay))
+        barEntriesList.add(BarEntry(4f, fifthDay))
+        barEntriesList.add(BarEntry(5f, sixthDay))
+        barEntriesList.add(BarEntry(6f, seventhDay))
     }
 
     override fun onDestroyView() {

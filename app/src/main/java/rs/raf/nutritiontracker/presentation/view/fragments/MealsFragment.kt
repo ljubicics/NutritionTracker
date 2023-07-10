@@ -53,12 +53,12 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
     private fun initRecycler() {
         adapter = ShortMealAdapter(onItemMoreClicked = {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+            transaction.add(R.id.container, MealDetailedFragment(it, null)).addToBackStack(null)
             transaction.commit()
         },
             listener = {
                 val transaction = parentFragmentManager.beginTransaction()
-                transaction.add(R.id.mainFragmentFcv, MealDetailedFragment(it, null)).addToBackStack(null)
+                transaction.add(R.id.container, MealDetailedFragment(it, null)).addToBackStack(null)
                 transaction.commit()
             })
         binding.mealsRecycler.adapter = adapter

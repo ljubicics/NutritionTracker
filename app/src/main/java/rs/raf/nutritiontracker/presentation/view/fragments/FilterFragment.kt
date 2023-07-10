@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.core.KoinApplication.Companion.init
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.databinding.FragmentFilterBinding
 import rs.raf.nutritiontracker.presentation.view.adapters.FilterPagerAdapter
+import rs.raf.nutritiontracker.presentation.view.adapters.FilterPagerAdapter2
 
 class FilterFragment : Fragment(R.layout.fragment_filter) {
     private var _binding: FragmentFilterBinding? = null
@@ -36,8 +38,22 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
 
     fun init() {
         println("INITTT")
-        binding.viewPager2.adapter = FilterPagerAdapter( parentFragmentManager, requireContext())
-        binding.tabLayout.setupWithViewPager(binding.viewPager2)
+//        binding.viewPager2.adapter = FilterPagerAdapter( parentFragmentManager, requireContext())
+//        binding.tabLayout.setupWithViewPager(binding.viewPager2)
+        if (binding.viewPager2.adapter == null) {
+            val adapter = FilterPagerAdapter2(this)
+            binding.viewPager2.adapter = adapter
+
+            // Connect the TabLayout with the ViewPager2
+            TabLayoutMediator(binding.tabLayout, binding.viewPager2) { tab, position ->
+                tab.text = when (position) {
+                    0 -> "By Category"
+                    1 -> "By Area"
+                    2 -> "By Ingredient"
+                    else -> ""
+                }
+            }.attach()
+        }
     }
 
 
