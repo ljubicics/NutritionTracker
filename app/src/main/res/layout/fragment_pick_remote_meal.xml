@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:clickable="true">
+
+    <TextView
+        android:id="@+id/pickRemoteMealNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="36dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/pickRemoteMealImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/pickRemoteMealImageView"
+        android:layout_width="296dp"
+        android:layout_height="215dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="68dp"
+        app:layout_constraintBottom_toTopOf="@+id/pickRemoteMealDateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/pickRemoteMealDateButton"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginBottom="148dp"
+        android:text="Pick a date"
+        app:layout_constraintBottom_toTopOf="@+id/pickRemoteMealAddButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/pickRemoteMealSpinner"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="148dp"
+        android:textAlignment="center"
+        android:background="@drawable/edittext_box"
+        app:layout_constraintBottom_toTopOf="@+id/pickRemoteMealAddButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toEndOf="@+id/pickRemoteMealDateButton"
+        app:layout_constraintTop_toBottomOf="@+id/pickRemoteMealImageView" />
+
+    <Button
+        android:id="@+id/pickRemoteMealAddButton"
+        android:layout_width="203dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="128dp"
+        android:text="Add to plan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.548"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,36 +27,6 @@ class MealViewModel(
     override val savedMealState: MutableLiveData<SavedMealState> = MutableLiveData()
     override val addMealDone: MutableLiveData<AddMealState> = MutableLiveData()
 
-    private val publishSubject: PublishSubject<String> = PublishSubject.create()
-
-
-//    init {
-//        // TODO: Namestiti da odmah povlaci iz kategorija sva jela
-//        val subscription = publishSubject
-//            .debounce(200, TimeUnit.MILLISECONDS)
-//            .distinctUntilChanged()
-//            .switchMap {
-//                mealRepository
-//                    .getAllByName(it)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .doOnError {
-//                        Timber.e("Error in publish subject")
-//                        Timber.e(it)
-//                    }
-//            }
-//            .subscribe(
-//                {
-//                    mealsState.value = MealState.Success(it)
-//                },
-//                {
-//                    mealsState.value = MealState.Error("Error happened while fetching data from db")
-//                    Timber.e(it)
-//                }
-//            )
-//        subscriptions.add(subscription)
-//    }
-
     @SuppressLint("CheckResult")
     override fun fetchAllMeals() {
 //        var categoryStrs = mutableListOf<String>() // lista naziva kategorija

@@ -49,7 +49,6 @@ class MealRepositoryImpl(
                             }
                         )
                 }
-                println("VELICINA MEAL RESPONSE LIST " + mealResponseList)
             },
             {
                 println("ERRORRRRRR2")

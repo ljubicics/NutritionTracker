@@ -16,6 +16,7 @@ import rs.raf.nutritiontracker.modules.listmealsModule
 import rs.raf.nutritiontracker.modules.mealModule
 import rs.raf.nutritiontracker.modules.mealsForCategoryModule
 import rs.raf.nutritiontracker.modules.mealsLoadingPageModule
+import rs.raf.nutritiontracker.modules.pickMealsModule
 import rs.raf.nutritiontracker.modules.userModule
 import timber.log.Timber
 
@@ -45,7 +46,8 @@ class NutritionTrackerApplication : Application() {
             filterMealsByAreaModule,
             filterMealsByIngredientViewModel,
             mealsLoadingPageModule,
-            listmealsModule
+            listmealsModule,
+            pickMealsModule
         )
         startKoin {
             androidLogger(Level.ERROR)

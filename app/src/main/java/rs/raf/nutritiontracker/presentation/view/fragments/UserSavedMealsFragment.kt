@@ -141,23 +141,21 @@ class UserSavedMealsFragment(
                         it.dateModified,
                         it.user,
                         it.mealType,
-                        it.dateInMillis
+                        it.dateInMillis,
+                        it.dateAdded
                     )
                 }
                 adapter.submitList(listOfSavedMeals)
             }
             is SavedMealState.Error -> {
 //                showLoadingState(false)
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS ERROR")
                 Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
             }
             is SavedMealState.DataFetched -> {
 //                showLoadingState(false)
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS DATA FETCHED")
                 Toast.makeText(context, "Fresh data fetched from the server", Toast.LENGTH_LONG).show()
             }
             is SavedMealState.Loading -> {
-                println("IZADJI MALA IZADJI MALA IZADJI BAR NA CAS LOADING")
 //                showLoadingState(true)
             }
         }

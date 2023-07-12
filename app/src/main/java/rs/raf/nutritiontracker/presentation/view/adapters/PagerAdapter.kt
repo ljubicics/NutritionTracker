@@ -4,11 +4,10 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.ListFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.CategoriesFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.FilterFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.MealPlanFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.MealsFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.PlanFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.ProfileFragment
 
 class PagerAdapter(
@@ -30,7 +29,7 @@ class PagerAdapter(
             FRAGMENT_1 -> CategoriesFragment()
             FRAGMENT_2 -> FilterFragment()
             FRAGMENT_3 -> MealsFragment()
-            FRAGMENT_4 -> PlanFragment()
+            FRAGMENT_4 -> MealPlanFragment()
             else -> ProfileFragment()
         }
     }
