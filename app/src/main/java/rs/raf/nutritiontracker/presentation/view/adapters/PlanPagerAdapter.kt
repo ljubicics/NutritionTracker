@@ -2,11 +2,8 @@ package rs.raf.nutritiontracker.presentation.view.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import rs.raf.nutritiontracker.presentation.view.fragments.FilterByAreaFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.FilterByCategoryFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.FilterByIngredientFragment
 import rs.raf.nutritiontracker.presentation.view.fragments.PickMealsFragment
-import rs.raf.nutritiontracker.presentation.view.fragments.PlanFragment
+import rs.raf.nutritiontracker.presentation.view.fragments.PlanOverviewFragment
 
 class PlanPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     private val fragmentList = mutableListOf<Fragment?>()
@@ -32,7 +29,7 @@ class PlanPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
         // Create a new fragment and add it to the list
         val newFragment = when (position) {
-            0 -> PickMealsFragment()
+            0 -> PlanOverviewFragment()
             1 -> PickMealsFragment()
             else -> throw IllegalArgumentException("Invalid tab position")
         }

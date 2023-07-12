@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import rs.raf.nutritiontracker.data.models.DayInTheWeek
+import rs.raf.nutritiontracker.data.models.MealForPlan
 import rs.raf.nutritiontracker.data.models.SavedMeal
 import rs.raf.nutritiontracker.data.repositories.specification.MealRepository
 import rs.raf.nutritiontracker.data.repositories.specification.MealsForCategoryRepository
@@ -21,18 +22,19 @@ class PickMealsViewModel(
 ) : ViewModel(), PickMealsContract.ViewModel {
     override val remoteMealsState: MutableLiveData<MealsForCategoryState> = MutableLiveData()
     override val localMealsState: MutableLiveData<SavedMealState> = MutableLiveData()
-    override val mondayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
-    override val tuesdayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
-    override val wednesdayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
-    override val thursdayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
-    override val fridayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
-    override val saturdayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
-    override val sundayState: MutableLiveData<List<SavedMeal>> = MutableLiveData()
+    override val number: MutableLiveData<Long> = MutableLiveData(0)
+    override val mondayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
+    override val tuesdayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
+    override val wednesdayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
+    override val thursdayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
+    override val fridayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
+    override val saturdayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
+    override val sundayState: MutableLiveData<List<MealForPlan>> = MutableLiveData()
 
     private val subscriptions = CompositeDisposable()
 
 
-    override fun addMealToDay(meal: SavedMeal, day: DayInTheWeek) {
+    override fun addMealToDay(meal: MealForPlan, day: DayInTheWeek) {
         when(day) {
             DayInTheWeek.MONDAY -> {
                 val currentList = mondayState.value
@@ -193,6 +195,10 @@ class PickMealsViewModel(
                 }
             )
         subscriptions.add(subscription)
+    }
+
+    override fun increaseNumber() {
+        this.number.value = this.number.value?.plus(1)
     }
 
     override fun onCleared() {

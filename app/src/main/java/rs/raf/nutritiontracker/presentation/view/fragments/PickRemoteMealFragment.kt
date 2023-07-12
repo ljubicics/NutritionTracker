@@ -18,6 +18,7 @@ import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.data.models.DayInTheWeek
 import rs.raf.nutritiontracker.data.models.Meal
 import rs.raf.nutritiontracker.data.models.MealForCategory
+import rs.raf.nutritiontracker.data.models.MealForPlan
 import rs.raf.nutritiontracker.data.models.SavedMeal
 import rs.raf.nutritiontracker.data.models.User
 import rs.raf.nutritiontracker.data.models.entities.MealSavedEntity
@@ -133,8 +134,9 @@ class PickRemoteMealFragment(
         }
         mealDateSelected = "$day $month $year"
         binding.pickRemoteMealAddButton.setOnClickListener {
-            val mealForPlan = SavedMeal(
-                mealId = 0,
+            val i = pickMealsViewModel.number.value
+            val mealForPlan = MealForPlan(
+                mealId = i!!,
                 meal.idMeal,
                 meal.strMeal,
                 meal.strDrinkAlternate,
@@ -194,6 +196,7 @@ class PickRemoteMealFragment(
                 today
             )
             pickMealsViewModel.addMealToDay(mealForPlan, calculateDay(mealForPlan))
+            pickMealsViewModel.increaseNumber()
             val state = pickMealsViewModel.mondayState
             println("JELO" + state.value?.size)
             requireActivity().supportFragmentManager.popBackStack()
@@ -216,7 +219,7 @@ class PickRemoteMealFragment(
         }
     }
 
-    private fun calculateDay(meal: SavedMeal) : DayInTheWeek {
+    private fun calculateDay(meal: MealForPlan) : DayInTheWeek {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = meal.dateInMillis
         val day = calendar.get(Calendar.DAY_OF_WEEK)
@@ -235,5 +238,9 @@ class PickRemoteMealFragment(
         } else {
             return DayInTheWeek.SATURDAY
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.data.models.DayInTheWeek
+import rs.raf.nutritiontracker.data.models.MealForPlan
 import rs.raf.nutritiontracker.data.models.SavedMeal
 import rs.raf.nutritiontracker.data.models.User
 import rs.raf.nutritiontracker.databinding.FragmentPickMealsBinding
@@ -67,11 +68,135 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
     private fun initRecycler() {
         binding.pickMealListRv.layoutManager = LinearLayoutManager(context)
         adapterLocal = PickMealAdapterLocal(onItemAddClicked = {
-            pickMealsViewModel.addMealToDay(it, calculateDay(it))
+            val i = pickMealsViewModel.number.value
+            val mealForPlan = MealForPlan(
+                i!!,
+                it.idMeal,
+                it.strMeal,
+                it.strDrinkAlternate,
+                it.strCategory,
+                it.strArea,
+                it.strInstructions,
+                it.strMealThumb,
+                it.strTags,
+                it.strYoutube,
+                it.strIngredient1,
+                it.strIngredient2,
+                it.strIngredient3,
+                it.strIngredient4,
+                it.strIngredient5,
+                it.strIngredient6,
+                it.strIngredient7,
+                it.strIngredient8,
+                it.strIngredient9,
+                it.strIngredient10,
+                it.strIngredient11,
+                it.strIngredient12,
+                it.strIngredient13,
+                it.strIngredient14,
+                it.strIngredient15,
+                it.strIngredient16,
+                it.strIngredient17,
+                it.strIngredient18,
+                it.strIngredient19,
+                it.strIngredient20,
+                it.strMeasure1,
+                it.strMeasure2,
+                it.strMeasure3,
+                it.strMeasure4,
+                it.strMeasure5,
+                it.strMeasure6,
+                it.strMeasure7,
+                it.strMeasure8,
+                it.strMeasure9,
+                it.strMeasure10,
+                it.strMeasure11,
+                it.strMeasure12,
+                it.strMeasure13,
+                it.strMeasure14,
+                it.strMeasure15,
+                it.strMeasure16,
+                it.strMeasure17,
+                it.strMeasure18,
+                it.strMeasure19,
+                it.strMeasure20,
+                it.strSource,
+                it.strImageSource,
+                it.strCreativeCommonsConfirmed,
+                it.dateModified,
+                it.user,
+                it.mealType,
+                it.dateInMillis,
+                it.dateAdded
+            )
+            pickMealsViewModel.addMealToDay(mealForPlan, calculateDay(it))
+            pickMealsViewModel.increaseNumber()
             val state = pickMealsViewModel.mondayState
             println("JELO" + state.value?.size)
         }, listener = {
-            pickMealsViewModel.addMealToDay(it, calculateDay(it))
+            val i = pickMealsViewModel.number.value
+            val mealForPlan = MealForPlan(
+                i!!,
+                it.idMeal,
+                it.strMeal,
+                it.strDrinkAlternate,
+                it.strCategory,
+                it.strArea,
+                it.strInstructions,
+                it.strMealThumb,
+                it.strTags,
+                it.strYoutube,
+                it.strIngredient1,
+                it.strIngredient2,
+                it.strIngredient3,
+                it.strIngredient4,
+                it.strIngredient5,
+                it.strIngredient6,
+                it.strIngredient7,
+                it.strIngredient8,
+                it.strIngredient9,
+                it.strIngredient10,
+                it.strIngredient11,
+                it.strIngredient12,
+                it.strIngredient13,
+                it.strIngredient14,
+                it.strIngredient15,
+                it.strIngredient16,
+                it.strIngredient17,
+                it.strIngredient18,
+                it.strIngredient19,
+                it.strIngredient20,
+                it.strMeasure1,
+                it.strMeasure2,
+                it.strMeasure3,
+                it.strMeasure4,
+                it.strMeasure5,
+                it.strMeasure6,
+                it.strMeasure7,
+                it.strMeasure8,
+                it.strMeasure9,
+                it.strMeasure10,
+                it.strMeasure11,
+                it.strMeasure12,
+                it.strMeasure13,
+                it.strMeasure14,
+                it.strMeasure15,
+                it.strMeasure16,
+                it.strMeasure17,
+                it.strMeasure18,
+                it.strMeasure19,
+                it.strMeasure20,
+                it.strSource,
+                it.strImageSource,
+                it.strCreativeCommonsConfirmed,
+                it.dateModified,
+                it.user,
+                it.mealType,
+                it.dateInMillis,
+                it.dateAdded
+            )
+            pickMealsViewModel.addMealToDay(mealForPlan, calculateDay(it))
+            pickMealsViewModel.increaseNumber()
         })
         adapterRemote = PickMealAdapterRemote(onItemAddClicked = {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -232,5 +357,9 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
         } else {
             return DayInTheWeek.SATURDAY
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -168,4 +168,8 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
         binding.listMealsToggleButton.isVisible = !loading
         binding.progressBarListMeals.isVisible = loading
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
