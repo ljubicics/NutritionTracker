@@ -37,6 +37,8 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     private lateinit var spinner: Spinner
     val dataList = mutableListOf<String>()
     private lateinit var listOfMealsByCat: List<MealForCategory>
+    private var currPage: Int = 0
+    private var goNext: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +50,6 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        println("ON VIEW CREATED FRAGMENT")
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         init()
@@ -81,31 +82,73 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     private fun initListeners() {
         binding.filterCategoryFragmentET.doAfterTextChanged {
             val filter = it.toString()
-            mealsForCategoryViewModel.getAllMealsByName(filter)
+            if(filter != "") {
+                mealsForCategoryViewModel.getAllMealsByName(filter)
+            } else {
+                val selectedCat = spinner.selectedItem.toString()
+                mealsForCategoryViewModel.getAllMealsForCategory(selectedCat)
+            }
         }
         binding.toggleButton.isChecked = true
         binding.toggleButton.setOnCheckedChangeListener{buttonView, isChecked ->
             if (isChecked) {
                 val layoutManager = binding.filterCategoryRecycler.layoutManager
                 listOfMealsByCat = listOfMealsByCat.sortedBy { it.strMeal }
-                adapter.submitList(listOfMealsByCat)
+                if(listOfMealsByCat.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByCat.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByCat.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByCat.subList(currPage * 10, max))
+                    goNext = false
+                }
                 binding.filterCategoryRecycler.postDelayed({
                     layoutManager?.scrollToPosition(0)
                 }, 100)
             } else {
                 val layoutManager = binding.filterCategoryRecycler.layoutManager
                 listOfMealsByCat = listOfMealsByCat.sortedByDescending { it.strMeal }
-                adapter.submitList(listOfMealsByCat)
+                if(listOfMealsByCat.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByCat.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByCat.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByCat.subList(currPage * 10, max))
+                    goNext = false
+                }
                 binding.filterCategoryRecycler.postDelayed({
                     layoutManager?.scrollToPosition(0)
                 }, 100)
+            }
+        }
+        binding.catNextPage.setOnClickListener {
+            if(goNext) {
+                this.currPage++
+            }
+            if(listOfMealsByCat.size > (currPage+1) * 10) {
+                adapter.submitList(listOfMealsByCat.subList(currPage * 10, (currPage + 1) * 10))
+            } else {
+                if(goNext) {
+                    val numLeft = (listOfMealsByCat.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByCat.subList(currPage * 10, max))
+                    goNext = false
+                }
+            }
+        }
+        binding.catPrevPage.setOnClickListener {
+            if(this.currPage > 0) {
+                this.currPage--
+                adapter.submitList(listOfMealsByCat.subList(currPage*10, (currPage+1)*10))
+                goNext = true
             }
         }
     }
 
     private fun initObservers() {
         mealsForCategoryViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
-            Timber.e(it.toString())
+            Timber.e("AAAAAAAAA")
+            currPage = 0
             renderStateMeal(it)
         })
         categoryViewModel.categoriesState.observe(viewLifecycleOwner, Observer {
@@ -129,7 +172,16 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
             is MealsForCategoryState.Success -> {
                 showLoadingState(false)
                 listOfMealsByCat = state.mealsForCategory
-                adapter.submitList(state.mealsForCategory)
+                currPage = 0
+                goNext = true
+                if(listOfMealsByCat.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByCat.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                        val numLeft = (listOfMealsByCat.size - (currPage * 10))
+                        val max = currPage * 10 + numLeft
+                        adapter.submitList(listOfMealsByCat.subList(currPage * 10, max))
+                        goNext = false
+                }
             }
             is MealsForCategoryState.Error -> {
                 showLoadingState(false)
@@ -184,7 +236,6 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
 
     override fun onPause() {
         super.onPause()
-        println("PAUZICA IZ KATEGORIJE")
         onDestroyView()
     }
 

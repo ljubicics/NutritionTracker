@@ -37,6 +37,9 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
     private lateinit var spinner: Spinner
     val dataList = mutableListOf<String>()
     private var listOfMealsByArea: List<ShortMeal> = listOf()
+    private var currPage: Int = 0
+    private var goNext: Boolean = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -118,23 +121,53 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
             if (isChecked) {
                 val layoutManager = binding.filterAreaRecycler.layoutManager
                 listOfMealsByArea = listOfMealsByArea.sortedBy { it.strMeal }
-                adapter.submitList(listOfMealsByArea)
-//                if (layoutManager != null) {
-//                    layoutManager.scrollToPosition(0)
-//                }
+                if(listOfMealsByArea.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByArea.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, max))
+                    goNext = false
+                }
                 binding.filterAreaRecycler.postDelayed({
                     layoutManager?.scrollToPosition(0)
                 }, 100)
             } else {
                 val layoutManager = binding.filterAreaRecycler.layoutManager
                 listOfMealsByArea = listOfMealsByArea.sortedByDescending { it.strMeal }
-                adapter.submitList(listOfMealsByArea)
-//                if (layoutManager != null) {
-//                    layoutManager.scrollToPosition(0)
-//                }
+                if(listOfMealsByArea.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByArea.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, max))
+                    goNext = false
+                }
                 binding.filterAreaRecycler.postDelayed({
                     layoutManager?.scrollToPosition(0)
                 }, 100)
+            }
+        }
+        binding.areaNextButton.setOnClickListener {
+            if(goNext) {
+                this.currPage++
+            }
+            if(listOfMealsByArea.size > (currPage+1) * 10) {
+                adapter.submitList(listOfMealsByArea.subList(currPage * 10, (currPage + 1) * 10))
+            } else {
+                if(goNext) {
+                    val numLeft = (listOfMealsByArea.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, max))
+                    goNext = false
+                }
+            }
+        }
+        binding.areaPrevButton.setOnClickListener {
+            if(this.currPage > 0) {
+                this.currPage--
+                adapter.submitList(listOfMealsByArea.subList(currPage*10, (currPage+1)*10))
+                goNext = true
             }
         }
     }
@@ -150,7 +183,16 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
                         it.idMeal,
                     )
                 }
-                adapter.submitList(listOfMealsByArea)
+                currPage = 0
+                goNext = true
+                if(listOfMealsByArea.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByArea.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByArea.subList(currPage * 10, max))
+                    goNext = false
+                }
             }
             is MealsForAreaState.Error -> {
                 showLoadingState(false)

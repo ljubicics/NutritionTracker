@@ -20,29 +20,13 @@
         android:layout_height="40dp"
         android:layout_marginEnd="44dp"
         android:background="@drawable/toggle_box_on"
+        android:textColor="@color/white"
         android:textOff="@string/byName"
         android:textOn="@string/byIngredient"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/mealsRecycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.241" />
-
-    <EditText
-        android:id="@+id/editTextListMeals"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:background="@drawable/edittext_box"
-        android:ems="10"
-        android:hint="Find by name"
-        android:inputType="text"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/mealsRecycler"
-        app:layout_constraintEnd_toStartOf="@+id/listMealsToggleButton"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.228" />
+        app:layout_constraintVertical_bias="0.183" />
 
     <ProgressBar
         android:id="@+id/progressBarListMeals"
@@ -59,7 +43,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="FIND"
         app:layout_constraintBottom_toTopOf="@+id/mealsRecycler"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,5 +51,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextListMeals"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editTextListMeals"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@drawable/edittext_box"
+        android:ems="10"
+        android:hint="Find by name"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/mealsRecycler"
+        app:layout_constraintEnd_toStartOf="@+id/listMealsToggleButton"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.173" />
+
+    <Button
+        android:id="@+id/prevPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="13dp"
+        android:text="Prev Page"
+        android:background="@drawable/toggle_box_on"
+        app:layout_constraintBottom_toTopOf="@+id/mealsRecycler"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextListMeals" />
+
+    <Button
+        android:id="@+id/nextPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="13dp"
+        android:text="Next Page"
+        android:background="@drawable/toggle_box_on"
+        app:layout_constraintBottom_toTopOf="@+id/mealsRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/listMealsToggleButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

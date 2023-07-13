@@ -26,7 +26,35 @@
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.851" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="68dp"
+        android:background="@drawable/edittext_box"
+        android:textOff="DESCENDING"
+        android:textOn="ASCENDING"
+        app:layout_constraintBottom_toTopOf="@+id/filterCategoryRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/filterCategoryFragmentET"
+        android:layout_width="214dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/edittext_box"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar3"
@@ -39,33 +67,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/filterCategoryFragmentET"
-        android:layout_width="214dp"
-        android:layout_height="34dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/edittext_box"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="text"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/toggleButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/catPrevPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Prev page"
+        android:background="@drawable/toggle_box_on"
+        app:layout_constraintBottom_toTopOf="@+id/filterCategoryRecycler"
+        app:layout_constraintEnd_toStartOf="@+id/catNextPage"
+        app:layout_constraintHorizontal_bias="0.237"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edittext_box"
-        android:textOff="DESCENDING"
-        android:textOn="ASCENDING"
+    <Button
+        android:id="@+id/catNextPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="10dp"
+        android:text="next page"
+        android:background="@drawable/toggle_box_on"
         app:layout_constraintBottom_toTopOf="@+id/filterCategoryRecycler"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

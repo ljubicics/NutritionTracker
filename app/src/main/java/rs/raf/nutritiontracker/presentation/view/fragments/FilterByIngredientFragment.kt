@@ -32,6 +32,9 @@ class FilterByIngredientFragment : Fragment(R.layout.fragment_filter_ingredient)
     private lateinit var adapter: ShortMealAdapter
     private val mealsForIngredientViewModel: MealsForIngredientContract.ViewModel by sharedViewModel<FilterMealsByIngredientViewModel>()
     private lateinit var listOfMealsByIngredient: List<ShortMeal>
+    private var currPage: Int = 0
+    private var goNext: Boolean = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -95,20 +98,55 @@ class FilterByIngredientFragment : Fragment(R.layout.fragment_filter_ingredient)
             if (isChecked) {
                 val layoutManager = binding.filterIngredientRecycler.layoutManager
                 listOfMealsByIngredient = listOfMealsByIngredient.sortedBy { it.strMeal }
-                adapter.submitList(listOfMealsByIngredient)
+                if(listOfMealsByIngredient.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByIngredient.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, max))
+                    goNext = false
+                }
                 binding.filterIngredientRecycler.postDelayed({
                     layoutManager?.scrollToPosition(0)
                 }, 100)
             } else {
                 val layoutManager = binding.filterIngredientRecycler.layoutManager
                 listOfMealsByIngredient = listOfMealsByIngredient.sortedByDescending { it.strMeal }
-                adapter.submitList(listOfMealsByIngredient)
+                if(listOfMealsByIngredient.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByIngredient.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, max))
+                    goNext = false
+                }
                 binding.filterIngredientRecycler.postDelayed({
                     layoutManager?.scrollToPosition(0)
                 }, 100)
             }
         }
-        binding.ingredientET
+        binding.ingredientNextButton.setOnClickListener {
+            if(goNext) {
+                this.currPage++
+            }
+            if(listOfMealsByIngredient.size > (currPage+1) * 10) {
+                adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, (currPage + 1) * 10))
+            } else {
+                if(goNext) {
+                    val numLeft = (listOfMealsByIngredient.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, max))
+                    goNext = false
+                }
+            }
+        }
+        binding.ingredientPrevButton.setOnClickListener {
+            if(this.currPage > 0) {
+                this.currPage--
+                adapter.submitList(listOfMealsByIngredient.subList(currPage*10, (currPage+1)*10))
+                goNext = true
+            }
+        }
     }
     private fun renderStateMeal(state: MealsForIngredientState) {
         when (state) {
@@ -121,7 +159,16 @@ class FilterByIngredientFragment : Fragment(R.layout.fragment_filter_ingredient)
                         it.idMeal,
                     )
                 }
-                adapter.submitList(listOfMealsByIngredient)
+                currPage = 0
+                goNext = true
+                if(listOfMealsByIngredient.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMealsByIngredient.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMealsByIngredient.subList(currPage * 10, max))
+                    goNext = false
+                }
             }
             is MealsForIngredientState.Error -> {
                 showLoadingState(false)

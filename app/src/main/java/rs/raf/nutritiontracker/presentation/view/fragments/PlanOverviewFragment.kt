@@ -137,80 +137,84 @@ class PlanOverviewFragment : Fragment(R.layout.fragment_plan_overview) {
             transaction.commit()
         }
         binding.sendPlanButton.setOnClickListener {
-            var mealsMonday: List<MealForPlan> = listOf()
-            var mealsTuesday: List<MealForPlan> = listOf()
-            var mealsWednesday: List<MealForPlan> = listOf()
-            var mealsThursday: List<MealForPlan> = listOf()
-            var mealsFriday: List<MealForPlan> = listOf()
-            var mealsSaturday: List<MealForPlan> = listOf()
-            var mealsSunday: List<MealForPlan> = listOf()
+            if(binding.planET.text.toString() != "" && binding.planET.text.contains("@")) {
+                var mealsMonday: List<MealForPlan> = listOf()
+                var mealsTuesday: List<MealForPlan> = listOf()
+                var mealsWednesday: List<MealForPlan> = listOf()
+                var mealsThursday: List<MealForPlan> = listOf()
+                var mealsFriday: List<MealForPlan> = listOf()
+                var mealsSaturday: List<MealForPlan> = listOf()
+                var mealsSunday: List<MealForPlan> = listOf()
 
-            if(pickMealsViewModel.mondayState.value != null) {
-                mealsMonday = pickMealsViewModel.mondayState.value!!
+                if (pickMealsViewModel.mondayState.value != null) {
+                    mealsMonday = pickMealsViewModel.mondayState.value!!
+                }
+                if (pickMealsViewModel.tuesdayState.value != null) {
+                    mealsTuesday = pickMealsViewModel.tuesdayState.value!!
+                }
+                if (pickMealsViewModel.wednesdayState.value != null) {
+                    mealsWednesday = pickMealsViewModel.wednesdayState.value!!
+                }
+                if (pickMealsViewModel.thursdayState.value != null) {
+                    mealsThursday = pickMealsViewModel.thursdayState.value!!
+                }
+                if (pickMealsViewModel.fridayState.value != null) {
+                    mealsFriday = pickMealsViewModel.fridayState.value!!
+                }
+                if (pickMealsViewModel.saturdayState.value != null) {
+                    mealsSaturday = pickMealsViewModel.saturdayState.value!!
+                }
+                if (pickMealsViewModel.sundayState.value != null) {
+                    mealsSunday = pickMealsViewModel.sundayState.value!!
+                }
+                var message = "Your meal plan: \n\n"
+                message += "Monday:\n"
+                for (meal in mealsMonday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "Tuesday:\n"
+                for (meal in mealsTuesday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "Wednesday:\n"
+                for (meal in mealsWednesday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "Thursday:\n"
+                for (meal in mealsThursday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "Friday:\n"
+                for (meal in mealsFriday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "Saturday:\n"
+                for (meal in mealsSaturday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "Sunday:\n"
+                for (meal in mealsSunday) {
+                    message += "Name: ${meal.strMeal}\n"
+                    message += "Meal Type: ${meal.mealType}\n"
+                    message += "--------------------\n"
+                }
+                message += "\nSincerely,\nYour NutritionTracker team"
+                sendEmail(binding.planET.text.toString(), "Your meal plan", message)
+            } else {
+                Toast.makeText(context, "Please enter valid email", Toast.LENGTH_SHORT).show()
             }
-            if(pickMealsViewModel.tuesdayState.value != null) {
-                mealsTuesday = pickMealsViewModel.tuesdayState.value!!
-            }
-            if(pickMealsViewModel.wednesdayState.value != null) {
-                mealsWednesday = pickMealsViewModel.wednesdayState.value!!
-            }
-            if(pickMealsViewModel.thursdayState.value != null) {
-                mealsThursday = pickMealsViewModel.thursdayState.value!!
-            }
-            if(pickMealsViewModel.fridayState.value != null) {
-                mealsFriday = pickMealsViewModel.fridayState.value!!
-            }
-            if(pickMealsViewModel.saturdayState.value != null) {
-                mealsSaturday = pickMealsViewModel.saturdayState.value!!
-            }
-            if(pickMealsViewModel.sundayState.value != null) {
-                mealsSunday = pickMealsViewModel.sundayState.value!!
-            }
-            var message = "Your meal plan: \n\n"
-            message += "Monday:\n"
-            for (meal in mealsMonday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "Tuesday:\n"
-            for (meal in mealsTuesday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "Wednesday:\n"
-            for (meal in mealsWednesday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "Thursday:\n"
-            for (meal in mealsThursday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "Friday:\n"
-            for(meal in mealsFriday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "Saturday:\n"
-            for (meal in mealsSaturday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "Sunday:\n"
-            for(meal in mealsSunday) {
-                message += "Name: ${meal.strMeal}\n"
-                message += "Meal Type: ${meal.mealType}\n"
-                message += "--------------------\n"
-            }
-            message += "\nSincerely,\nYour NutritionTracker team"
-            sendEmail(binding.planET.text.toString(), "Your meal plan", message)
         }
     }
 

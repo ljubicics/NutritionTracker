@@ -29,6 +29,8 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
     private val listMealsViewModel: MealsForCategoryContract.ViewModel by sharedViewModel<ListMealsViewModel>()
     private val listMealsIngredientViewModel: MealsForIngredientContract.ViewModel by sharedViewModel<ListMealsViewModel>()
     private var listOfMeals: List<ShortMeal> = listOf()
+    private var currPage: Int = 0
+    private var goNext: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +81,7 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
                 }, 100)
             }
         }
-            binding.editTextListMeals.doAfterTextChanged {
+        binding.editTextListMeals.doAfterTextChanged {
             val filter = it.toString()
             if(!binding.listMealsToggleButton.isChecked) {
                 var list: MutableList<ShortMeal> = mutableListOf()
@@ -88,11 +90,43 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
                         list.add(meal)
                     }
                 }
-                adapter.submitList(list)
+//                adapter.submitList(list)
+                currPage = 0
+                if(list.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMeals.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (list.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMeals.subList(currPage * 10, max))
+                    goNext = false
+                }
             } else {
                 binding.button.setOnClickListener {
+                    currPage = 0
                     listMealsIngredientViewModel.fetchAllMealsForIngredient(filter)
                 }
+            }
+        }
+        binding.nextPage.setOnClickListener {
+            if(goNext) {
+                this.currPage++
+            }
+            if(listOfMeals.size > (currPage+1) * 10) {
+                adapter.submitList(listOfMeals.subList(currPage * 10, (currPage + 1) * 10))
+            } else {
+                if(goNext) {
+                    val numLeft = (listOfMeals.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMeals.subList(currPage * 10, max))
+                    goNext = false
+                }
+            }
+        }
+        binding.prevPage.setOnClickListener {
+            if(this.currPage > 0) {
+                this.currPage--
+                adapter.submitList(listOfMeals.subList(currPage*10, (currPage+1)*10))
+                goNext = true
             }
         }
     }
@@ -101,10 +135,13 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
         listMealsViewModel.getAllMeals()
         listMealsViewModel.mealsForCategoryState.observe(viewLifecycleOwner, Observer {
             Timber.e(it.toString())
+            currPage = 0
+            goNext = true
             renderStateMeal(it)
         })
         listMealsIngredientViewModel.mealsForIngredientState.observe(viewLifecycleOwner, Observer {
             Timber.e(it.toString())
+            currPage = 0
             renderStateMealIngredient(it)
         })
     }
@@ -120,7 +157,7 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
                         it.idMeal,
                     )
                 }
-                adapter.submitList(listOfMeals)
+                adapter.submitList(listOfMeals.subList(currPage*10, (currPage+1)*10))
             }
             is MealsForCategoryState.Error -> {
                 showLoadingState(false)
@@ -139,6 +176,7 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
         when (state) {
             is MealsForIngredientState.Success -> {
                 showLoadingState(false)
+                Timber.e("USOOOOOOOOOOOOOOOOO " + currPage)
                 listOfMeals = state.mealsForCategory.map {
                     ShortMeal(
                         it.strMeal,
@@ -146,7 +184,14 @@ class MealsFragment : Fragment(R.layout.fragment_meals){
                         it.idMeal,
                     )
                 }
-                adapter.submitList(listOfMeals)
+                if(listOfMeals.size > (currPage+1) * 10) {
+                    adapter.submitList(listOfMeals.subList(currPage * 10, (currPage + 1) * 10))
+                } else {
+                    val numLeft = (listOfMeals.size - (currPage * 10))
+                    val max = currPage * 10 + numLeft
+                    adapter.submitList(listOfMeals.subList(currPage * 10, max))
+                    goNext = false
+                }
             }
             is MealsForIngredientState.Error -> {
                 showLoadingState(false)

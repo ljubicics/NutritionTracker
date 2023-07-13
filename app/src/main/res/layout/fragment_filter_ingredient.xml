@@ -29,7 +29,7 @@
         android:id="@+id/filterIngredientFragmentET"
         android:layout_width="214dp"
         android:layout_height="34dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/edittext_box"
         android:ems="10"
         android:hint="Filter By Name"
@@ -40,24 +40,11 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonIngredient"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/edittext_box"
-        android:textOff="DESCENDING"
-        android:textOn="ASCENDING"
-        app:layout_constraintBottom_toTopOf="@+id/filterIngredientRecycler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/ingredientET"
         android:layout_width="218dp"
         android:layout_height="38dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/edittext_box"
         android:ems="10"
         android:hint="Enter ingredient name"
@@ -65,7 +52,7 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/filterIngredientFragmentET"
         app:layout_constraintEnd_toStartOf="@+id/findByIngredientButton"
-        app:layout_constraintHorizontal_bias="0.204"
+        app:layout_constraintHorizontal_bias="0.226"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -74,14 +61,54 @@
         android:id="@+id/findByIngredientButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorSelected"
         android:layout_marginTop="76dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/colorSelected"
         android:text="Find"
         app:layout_constraintBottom_toTopOf="@+id/filterIngredientFragmentET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.865" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonIngredient"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/edittext_box"
+        android:textOff="DESCENDING"
+        android:textOn="ASCENDING"
+        app:layout_constraintBottom_toTopOf="@+id/filterIngredientRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/ingredientPrevButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:layout_marginBottom="12dp"
+        android:text="Prev page"
+        app:layout_constraintBottom_toTopOf="@+id/filterIngredientRecycler"
+        app:layout_constraintEnd_toStartOf="@+id/ingredientNextButton"
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toggleButtonIngredient"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/ingredientNextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="12dp"
+        android:text="next page"
+        app:layout_constraintBottom_toTopOf="@+id/filterIngredientRecycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleButtonIngredient"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
