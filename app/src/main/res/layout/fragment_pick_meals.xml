@@ -33,7 +33,7 @@
                 android:layout_weight="5"
                 android:textAlignment="center"
                 android:background="@drawable/edittext_box"
-                android:hint="Search by name"
+                android:hint="@string/search_by_name"
                 app:layout_goneMarginEnd="16dp" />
 
             <Switch
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_weight="2"
-                android:text="Remote" />
+                android:text="@string/remote" />
         </LinearLayout>
     </LinearLayout>
 
@@ -62,7 +62,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pickMealListRv"
         android:layout_width="409dp"
-        android:layout_height="670dp"
+        android:layout_height="650dp"
         android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

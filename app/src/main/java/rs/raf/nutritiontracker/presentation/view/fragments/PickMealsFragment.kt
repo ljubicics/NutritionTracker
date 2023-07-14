@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import rs.raf.nutritiontracker.R
 import rs.raf.nutritiontracker.data.models.DayInTheWeek
+import rs.raf.nutritiontracker.data.models.MealForCategory
 import rs.raf.nutritiontracker.data.models.MealForPlan
 import rs.raf.nutritiontracker.data.models.SavedMeal
+import rs.raf.nutritiontracker.data.models.ShortMeal
 import rs.raf.nutritiontracker.data.models.User
 import rs.raf.nutritiontracker.databinding.FragmentPickMealsBinding
 import rs.raf.nutritiontracker.presentation.contract.PickMealsContract
@@ -35,6 +38,8 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
     private lateinit var adapterRemote: PickMealAdapterRemote
     private val pickMealsViewModel: PickMealsContract.ViewModel by sharedViewModel<PickMealsViewModel>()
     private val userViewModel: UserContract.ViewModel by sharedViewModel<UserViewModel>()
+    private var listOfMealsLocal: List<SavedMeal> = listOf()
+    private var listOfMealsRemote: List<MealForCategory> = listOf()
     private lateinit var user: User
     private lateinit var switch: Switch
 
@@ -230,6 +235,29 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
                 pickMealsViewModel.getAllMealsLocal(user.username)
             }
         }
+            binding.nameSearch.doAfterTextChanged {
+                if(switch.isChecked) {
+                    val filter = it.toString()
+                    var list1: MutableList<MealForCategory> = mutableListOf()
+                    for (meal in listOfMealsRemote) {
+                        if (meal.strMeal!!.contains(filter, ignoreCase = true)) {
+                            list1.add(meal)
+                        }
+                    }
+                    adapterRemote.submitList(list1)
+                } else {
+                    binding.nameSearch.doAfterTextChanged {
+                        val filter = it.toString()
+                        var list: MutableList<SavedMeal> = mutableListOf()
+                        for (meal in listOfMealsLocal) {
+                            if (meal.strMeal!!.contains(filter, ignoreCase = true)) {
+                                list.add(meal)
+                            }
+                        }
+                        adapterLocal.submitList(list)
+                    }
+                }
+            }
     }
 
     private fun renderStateRemote(state: MealsForCategoryState) {
@@ -237,7 +265,8 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
             is MealsForCategoryState.Success -> {
 //                showLoadingState(false)
                 binding.pickMealListRv.adapter = adapterRemote
-                adapterRemote.submitList(state.mealsForCategory)
+                listOfMealsRemote = state.mealsForCategory
+                adapterRemote.submitList(listOfMealsRemote)
                 adapterRemote.notifyDataSetChanged()
             }
             is MealsForCategoryState.Error -> {
@@ -259,7 +288,7 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
             is SavedMealState.Success -> {
 //                showLoadingState(false)
                 binding.pickMealListRv.adapter = adapterLocal
-                val listOfSavedMeals = state.savedMeals.map {
+                listOfMealsLocal = state.savedMeals.map {
                     SavedMeal(
                         it.mealId,
                         it.idMeal,
@@ -321,7 +350,7 @@ class PickMealsFragment : Fragment(R.layout.fragment_pick_meals) {
                         it.dateAdded
                     )
                 }
-                adapterLocal.submitList(listOfSavedMeals)
+                adapterLocal.submitList(listOfMealsLocal)
                 adapterLocal.notifyDataSetChanged()
             }
             is SavedMealState.Error -> {

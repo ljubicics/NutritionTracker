@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="36dp"
-        android:text="TextView"
+        android:text="@string/textview"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/saveMealImageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="56dp"
         android:layout_marginBottom="148dp"
-        android:text="Pick a date"
+        android:text="@string/pick_a_date"
         app:layout_constraintBottom_toTopOf="@+id/saveMealSaveButton"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,7 +63,7 @@
         android:layout_width="203dp"
         android:layout_height="54dp"
         android:layout_marginBottom="128dp"
-        android:text="SAVE"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.548"

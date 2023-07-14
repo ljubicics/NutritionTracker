@@ -32,7 +32,7 @@
                 android:layout_marginBottom="7dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -60,7 +60,7 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/mealsAreaTV"
@@ -75,7 +75,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/mealsTagsTV"
@@ -90,7 +90,7 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/mealsLinkTV"
@@ -105,7 +105,7 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerView"
@@ -120,7 +120,7 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerView"
@@ -135,22 +135,12 @@
                 android:layout_marginBottom="11dp"
                 android:background="@drawable/edittext_box"
                 android:gravity="center"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-<!--            <EditText-->
-<!--                android:id="@+id/editSavedMealIngredientsTV"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:background="@drawable/edittext_box"-->
-<!--                android:text="EditText"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/black" />-->
 
             <EditText
                 android:id="@+id/editSavedMealInstructionsTV"
@@ -158,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/edittext_box"
-                android:text="EditText"
+                android:text="@string/edittext"
                 android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>

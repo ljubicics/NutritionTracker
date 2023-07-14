@@ -3,25 +3,25 @@
     <item
         android:id="@+id/navigation_1"
         android:icon="@drawable/categories_bottomnav_icon"
-        android:title="Categories" />
+        android:title="@string/categories" />
 
     <item
         android:id="@+id/navigation_2"
         android:icon="@drawable/filter_bottomnav_icon"
-        android:title="Filter" />
+        android:title="@string/filter" />
 
     <item
         android:id="@+id/navigation_3"
         android:icon="@drawable/meals_bottomnav_icon"
-        android:title="Meals" />
+        android:title="@string/meals" />
 
     <item
         android:id="@+id/navigation_4"
         android:icon="@drawable/plan_bottomnav_icon"
-        android:title="Plan" />
+        android:title="@string/plan" />
 
     <item
         android:id="@+id/navigation_5"
         android:icon="@drawable/profile_bottomnav_icon"
-        android:title="Profile" />
+        android:title="@string/profile" />
 </menu>

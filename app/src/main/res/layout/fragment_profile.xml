@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="YOUR PROFILE"
+        android:text="@string/your_profile"
         android:textColor="@color/black"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,25 +36,12 @@
         android:id="@+id/savedMealsButton"
         android:layout_width="168dp"
         android:layout_height="163dp"
-        android:layout_marginStart="16dp"
         android:layout_marginBottom="104dp"
-        android:text="Saved Meals"
+        android:text="@string/saved_meals"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="173dp"
-        android:layout_height="158dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="104dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/savedMealsButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.986" />
 </androidx.constraintlayout.widget.ConstraintLayout>

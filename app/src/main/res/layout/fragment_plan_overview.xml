@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Monday"
+                android:text="@string/monday"
                 android:textAlignment="center" />
 
             <TextView
@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Tuesday"
+                android:text="@string/tuesday"
                 android:textAlignment="center" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Wednesday"
+                android:text="@string/wednesday"
                 android:textAlignment="center" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Thursday"
+                android:text="@string/thursday"
                 android:textAlignment="center" />
 
             <TextView
@@ -77,7 +77,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Friday"
+                android:text="@string/friday"
                 android:textAlignment="center" />
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Saturday"
+                android:text="@string/saturday"
                 android:textAlignment="center" />
 
             <TextView
@@ -103,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/colorSelected"
-                android:text="Sunday"
+                android:text="@string/sunday"
                 android:textAlignment="center" />
 
             <TextView
@@ -121,7 +121,7 @@
         android:background="@drawable/edittext_box"
         android:ems="10"
         android:gravity="center"
-        android:hint="Enter email"
+        android:hint="@string/enter_email"
         android:inputType="text"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -133,7 +133,7 @@
         android:id="@+id/sendPlanButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Plan"
+        android:text="@string/send_plan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.588"

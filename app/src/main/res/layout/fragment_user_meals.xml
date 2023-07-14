@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="24dp"
-        android:text="SAVED MEALS"
+        android:text="@string/saved_meals"
         android:textColor="@color/black"
         android:textSize="35dp"
         app:layout_constraintBottom_toTopOf="@+id/userSavedMealsRecyclerView"
