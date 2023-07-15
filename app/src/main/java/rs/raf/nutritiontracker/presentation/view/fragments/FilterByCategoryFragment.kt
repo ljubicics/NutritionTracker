@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -39,6 +40,7 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     private lateinit var listOfMealsByCat: List<MealForCategory>
     private var currPage: Int = 0
     private var goNext: Boolean = true
+    private lateinit var text: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +65,7 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
 
     private fun initUi() {
         spinner = binding.spinner
+        text = binding.filterCategoryFragmentET
     }
 
     private fun initRecycler() {
@@ -80,14 +83,22 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
     }
 
     private fun initListeners() {
-        binding.filterCategoryFragmentET.doAfterTextChanged {
-            val filter = it.toString()
-            if(filter != "") {
-                mealsForCategoryViewModel.getAllMealsByName(filter)
-            } else {
+        text.doAfterTextChanged {editable ->
+                val filter = editable.toString()
+            if(filter.isNotEmpty()) {
                 val selectedCat = spinner.selectedItem.toString()
                 mealsForCategoryViewModel.getAllMealsForCategory(selectedCat)
+            } else {
+                mealsForCategoryViewModel.getAllMealsByName(filter)
+
             }
+//                if (filter != "") {
+//                    mealsForCategoryViewModel.getAllMealsByName(filter)
+//                } else {
+//                    val selectedCat = spinner.selectedItem.toString()
+//                    mealsForCategoryViewModel.getAllMealsForCategory(selectedCat)
+//                }
+
         }
         binding.toggleButton.isChecked = true
         binding.toggleButton.setOnCheckedChangeListener{buttonView, isChecked ->
@@ -239,9 +250,9 @@ class FilterByCategoryFragment : Fragment(R.layout.fragment_filter_category) {
         onDestroyView()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 
 }

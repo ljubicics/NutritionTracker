@@ -109,13 +109,15 @@ class FilterByAreaFragment : Fragment(R.layout.fragment_filter_area) {
     private fun initListeners() {
         binding.filterAreaFragmentET.doAfterTextChanged {
             val filter = it.toString()
-            var list: MutableList<ShortMeal> = mutableListOf()
-            for(meal in listOfMealsByArea) {
-                if(meal.strMeal.contains(filter, ignoreCase = true)) {
-                    list.add(meal)
+            if(filter.isNotEmpty()) {
+                var list: MutableList<ShortMeal> = mutableListOf()
+                for (meal in listOfMealsByArea) {
+                    if (meal.strMeal.contains(filter, ignoreCase = true)) {
+                        list.add(meal)
+                    }
                 }
+                adapter.submitList(list)
             }
-            adapter.submitList(list)
         }
         binding.toggleButtonArea.setOnCheckedChangeListener{buttonView, isChecked ->
             if (isChecked) {
