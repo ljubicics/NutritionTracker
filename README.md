@@ -29,3 +29,8 @@ Profile Screen - Shows number of meals saved by user in past 7 days. By clicking
 |------------------|--------------|--------------------|
 |<img width="371" alt="Screenshot 2023-07-22 at 02 57 55" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/b6396a51-8931-42a3-9122-966c97bfbb51">|<img width="367" alt="Screenshot 2023-07-22 at 02 56 48" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/744ba5c3-5c63-4de9-bd3a-65a1c13ef978">|<img width="370" alt="Screenshot 2023-07-22 at 02 58 27" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/05b9336b-1bb9-46a4-998a-df62b58d7c1b">|
 
+| Meals | Weekly Plan | Profile |
+|-------|-------------|---------|
+|<img width="371" alt="Screenshot 2023-07-22 at 03 01 31" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/7429d3d5-1833-4bc7-a035-a15539f50299">|<img width="378" alt="Screenshot 2023-07-22 at 03 03 18" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/cbdfaf9a-7d83-4a55-b7ba-aa0317bd5b78">|<img width="368" alt="Screenshot 2023-07-22 at 03 04 10" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/138aa4e0-4475-4e34-b8d6-a98fa2342958">|
+
+
