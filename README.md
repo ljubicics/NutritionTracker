@@ -1,7 +1,7 @@
 # NutritionTracker
 Nutrition Tracker is an Android application written in Kotlin using Android Studio and it was the second project for "Mobile Development" course at Faculty of Computing. 
-The main purpose of the application is to help students quickly and easily find schedule information about lectures at the university (RAF). 
-In addition, application has an option for creating a note which can be edited, archived and deleted and it has a statistical screen which represents number of notes created in the last 5 days.
+The main purpose of the application is to help users quickly and easily find meals information about their preparating and first of all help them save them for later user. 
+In addition, application has an option for sending email with weekly plan, also user can see statistcis how many meals she/he added in the past 7 days.
 
 # How to use project
 Login - To login you need to enter strahinja for pin and username. User is stored in database.
