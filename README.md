@@ -14,7 +14,10 @@ Profile Screen - Shows number of meals saved by user in past 7 days. By clicking
 
 #Technologies used in the project:
 - Koin framework for dependency injection
-    - Retrofit library for communicating with the server and REST convention
-    - RxJava library for easier work with threads
-    - Room library for working with database (ORM)
-    - Moshi library for working with json
+- Retrofit library for communicating with the server and REST convention
+- RxJava library for easier work with threads
+- Room library for working with database (ORM)
+- Moshi library for working with json
+
+- #Pictures
+  <img width="367" alt="login" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/714a3ed2-d053-4fd4-8123-1333d3fe9a87">
