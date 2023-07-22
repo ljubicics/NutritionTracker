@@ -11,3 +11,11 @@ Filter Screen - Used for filtering meals from API by category, area and ingredie
 Meals Screen - Listing all meals from local database using RecyclerView.
 Plan Screen - Shows number of meals chosen for each day, by clicking on the number you can see which meals were selected, and by writing email in edittext you can send weekly plan on email using implicit intent.
 Profile Screen - Shows number of meals saved by user in past 7 days. By clicking on saved meals there could be found all the the meals that were saved by user
+
+#Technologies used in the project:
+
+    Koin framework for dependency injection
+    Retrofit library for communicating with the server and REST convention
+    RxJava library for easier work with threads
+    Room library for working with database (ORM)
+    Moshi library for working with json
