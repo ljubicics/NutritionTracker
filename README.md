@@ -11,7 +11,7 @@ Filter Screen - Used for filtering meals from API by category, area and ingredie
 Meals Screen - Listing all meals from local database using RecyclerView.
 Plan Screen - Shows number of meals chosen for each day, by clicking on the number you can see which meals were selected, and by writing email in edittext you can send weekly plan on email using implicit intent.
 Profile Screen - Shows number of meals saved by user in past 7 days. By clicking on saved meals there could be found all the the meals that were saved by user
-
+                              
 #Technologies used in the project:
 - Koin framework for dependency injection
 - Retrofit library for communicating with the server and REST convention
@@ -19,6 +19,7 @@ Profile Screen - Shows number of meals saved by user in past 7 days. By clicking
 - Room library for working with database (ORM)
 - Moshi library for working with json
 
-- #Pictures
-  |Login|
-  <img width="367" alt="login" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/714a3ed2-d053-4fd4-8123-1333d3fe9a87">
+#Pictures
+| Login |
+|-------|
+|<img width="367" alt="login" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/714a3ed2-d053-4fd4-8123-1333d3fe9a87">|
