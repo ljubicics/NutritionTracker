@@ -20,13 +20,10 @@ Profile Screen - Shows number of meals saved by user in past 7 days. By clicking
 - Moshi library for working with json
 
 #Pictures
-| Login |
-|-------|
-|<img width="367" alt="login" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/714a3ed2-d053-4fd4-8123-1333d3fe9a87">|
+| Login | Categories|
+|-------|-----------|
+|<img width="367" alt="login" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/714a3ed2-d053-4fd4-8123-1333d3fe9a87">|<img width="368" alt="Screenshot 2023-07-22 at 02 53 03" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/18b458e3-6b20-4d15-b02d-77483e263647">|
 
-| Categories|
-|-----------|
-|<img width="368" alt="Screenshot 2023-07-22 at 02 53 03" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/18b458e3-6b20-4d15-b02d-77483e263647">|
 
 |Filter By Category|
 |------------------|
