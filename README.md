@@ -25,7 +25,7 @@ Profile Screen - Shows number of meals saved by user in past 7 days. By clicking
 |<img width="367" alt="login" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/714a3ed2-d053-4fd4-8123-1333d3fe9a87">|<img width="368" alt="Screenshot 2023-07-22 at 02 53 03" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/18b458e3-6b20-4d15-b02d-77483e263647">|
 
 
-|Filter By Category|Filter By Area|Filter By Ingredient|
+| Filter By Category | Filter By Area | Filter By Ingredient|
 |------------------|--------------|--------------------|
 |<img width="371" alt="Screenshot 2023-07-22 at 02 57 55" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/b6396a51-8931-42a3-9122-966c97bfbb51">|<img width="367" alt="Screenshot 2023-07-22 at 02 56 48" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/744ba5c3-5c63-4de9-bd3a-65a1c13ef978">|<img width="370" alt="Screenshot 2023-07-22 at 02 58 27" src="https://github.com/ljubicics/NutritionTracker/assets/119794666/05b9336b-1bb9-46a4-998a-df62b58d7c1b">|
 
